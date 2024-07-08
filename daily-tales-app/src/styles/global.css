@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  overflow: hidden;
+}
+
+input {
+  outline: none;
+}
+
+*::-webkit-scrollbar {
+  display: none;
+}
+
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  text-decoration: none;
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  src: url('./assets/fonts/Pretendard-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}

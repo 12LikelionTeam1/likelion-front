@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    "skipLibCheck": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "noEmit": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@components/*": ["components/*"],
+      "@routes/*": ["routes/*"],
+      "@libs/*": ["libs/*"],
+      "@typedef/*": ["typedef/*"],
+      "@hooks/*": ["hooks/*"],
+      "@store/*": ["store/*"],
+      "@styles/*": ["styles/*"],
+      "@assets/*": ["assets/*"]
+    }
+  },
+  "include": ["vite.config.ts"]
+}

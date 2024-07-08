@@ -1,0 +1,45 @@
+openapi: 3.0.1
+info:
+  title: Test API
+  description: Test API 명세입니다.
+  version: 0.0.1
+servers:
+- url: https://localhost:8080
+tags: []
+paths:
+  /api/oauth/google:
+    get:
+      tags:
+      - authentication
+      summary: 구글 OAuth 인증 API
+      description: 구글 OAuth 인증 API 입니다.
+      operationId: google-oauth-api
+      parameters:
+      - name: code
+        in: query
+        description: code
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: "200"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/api-oauth-google-587458847'
+              examples:
+                google-oauth-api:
+                  value: "{\n  \"access_token\" : \"access_token\",\n  \"refresh_token\"\
+                    \ : \"refresh_token\"\n}"
+components:
+  schemas:
+    api-oauth-google-587458847:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: access_token
+        refresh_token:
+          type: string
+          description: refresh_token
