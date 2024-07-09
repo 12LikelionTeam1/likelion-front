@@ -25,7 +25,38 @@ input {
 
 @font-face {
   font-family: 'Pretendard';
-  src: url('./assets/fonts/Pretendard-Regular.woff2') format('woff2');
+  src: url('/fonts/Pretendard-Regular.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
+}
+
+@font-face {
+  font-family: 'NanumMyeongjo';
+  src: url('/fonts/NanumMyeongjo-Regular.ttf') format('ttf');
+  font-weight: bold;
+  font-style: normal;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#root {
+  max-width: 768px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container {
+  max-width: 768px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
