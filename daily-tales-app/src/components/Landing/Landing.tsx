@@ -1,15 +1,15 @@
 import Logo from '@components/common/Logo/Logo';
 import NanumText from '@components/common/NanumText/NanumText';
+import { CredentialResponse, GoogleLogin } from '@react-oauth/google';
 import style from './styles/landing.module.css';
-import images from '@assets/images';
 
 type Props = {
-  onGoogleLoginClicked: () => void;
+  onGoogleLoginSuccessed: (cr: CredentialResponse) => void;
 };
 
-const Landing = ({ onGoogleLoginClicked }: Props) => {
+const Landing = ({ onGoogleLoginSuccessed }: Props) => {
   return (
-    <div>
+    <div className={style.container}>
       <div className='container'>
         <Logo />
         <div style={{ height: 32 }} />
@@ -22,10 +22,15 @@ const Landing = ({ onGoogleLoginClicked }: Props) => {
           {'성장하세요'}
         </NanumText>
       </div>
-      <button onClick={onGoogleLoginClicked} className={style.googleBtn}>
-        <img src={images.googleLogo} alt='google login logo' />
-        {'Google 계정으로 시작하기'}
-      </button>
+      <GoogleLogin
+        width={368}
+        theme='filled_black'
+        onSuccess={(cr) => {
+          console.log(cr);
+          onGoogleLoginSuccessed(cr);
+        }}
+        useOneTap
+      />
     </div>
   );
 };
