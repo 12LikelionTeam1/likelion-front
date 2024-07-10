@@ -1,0 +1,43 @@
+.calendar {
+  margin-left: 8px;
+}
+
+.pickerWapper {
+  width: 100%;
+  padding: 12px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding-bottom: 48px;
+}
+
+.close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+.pickerRow {
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.pickerTag {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 12px;
+}
+
+.pickerItem {
+  width: 20px;
+  height: 20px;
+}
+
+.pickerCount {
+  position: absolute;
+  bottom: -24px;
+  left: calc(50% - 12px);
+}
