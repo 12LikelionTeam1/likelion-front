@@ -25,10 +25,7 @@ const Landing = ({ onGoogleLoginSuccessed }: Props) => {
       <GoogleLogin
         width={368}
         theme='filled_black'
-        onSuccess={(cr) => {
-          console.log(cr);
-          onGoogleLoginSuccessed(cr);
-        }}
+        onSuccess={onGoogleLoginSuccessed}
         useOneTap
       />
     </div>
