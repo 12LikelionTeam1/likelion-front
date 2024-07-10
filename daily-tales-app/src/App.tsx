@@ -1,11 +1,15 @@
 import { BrowserRouter } from 'react-router-dom';
 import RootNavigationContainer from '@routes/containers/RootNavigationContainer';
+import { Provider } from 'react-redux';
+import store from '@store/store';
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <RootNavigationContainer />
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <RootNavigationContainer />
+      </BrowserRouter>
+    </Provider>
   );
 };
 
