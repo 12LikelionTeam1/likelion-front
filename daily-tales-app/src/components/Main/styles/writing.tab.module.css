@@ -1,0 +1,33 @@
+.titleWrapper {
+  height: 32px;
+  padding: 0 12px;
+}
+
+.sepLine {
+  height: 56px;
+  width: 1px;
+  border-left: 1px solid #fa9a9a;
+  margin: 0 12px;
+}
+
+.pickerWrapper {
+  padding: 12px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #f7f7f7;
+}
+
+.closeBtn {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+.pickerRow {
+  width: 100%;
+  margin-bottom: 12px;
+}

@@ -6,3 +6,10 @@
 .mypage {
   margin-left: 12px;
 }
+
+.bottomTab {
+  height: 48px;
+  background-color: #ffffff;
+  position: sticky;
+  bottom: 0;
+}
