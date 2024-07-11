@@ -83,27 +83,30 @@ const DatePicker = ({ onDatePicked }: Props) => {
     [pickerData],
   );
 
-  const pickerTagSelected = useCallback((tag: PickerTag) => {
-    setPickerData((prev) => {
-      const clone = { ...prev };
+  const pickerTagSelected = useCallback(
+    (tag: PickerTag) => {
+      setPickerData((prev) => {
+        const clone = { ...prev };
 
-      clone.tag = tag;
+        clone.tag = tag;
 
-      if (tag == 'year') clone.current = selected.getFullYear();
+        if (tag == 'year') clone.current = selected.getFullYear();
 
-      if (tag == 'month') clone.current = selected.getMonth() + 1;
+        if (tag == 'month') clone.current = selected.getMonth() + 1;
 
-      if (tag == 'date') clone.current = selected.getDate();
+        if (tag == 'date') clone.current = selected.getDate();
 
-      clone.list = [
-        ...[...new Array(4).keys()].map((v) => clone.current - 4 + v),
-        clone.current,
-        ...[...new Array(4).keys()].map((v) => clone.current + v + 1),
-      ];
+        clone.list = [
+          ...[...new Array(4).keys()].map((v) => clone.current - 4 + v),
+          clone.current,
+          ...[...new Array(4).keys()].map((v) => clone.current + v + 1),
+        ];
 
-      return clone;
-    });
-  }, []);
+        return clone;
+      });
+    },
+    [selected],
+  );
 
   const onPrevClicked = useCallback(() => {
     pickDateValue(pickerData.current - 1);
