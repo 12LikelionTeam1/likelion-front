@@ -24,8 +24,14 @@ const WritingTab = ({ current }: Props) => {
   const [tales, setTales] = useState<TaleType[]>([]);
   const [isIndexPickerVisible, setIsIndexPickerVisible] = useState(false);
 
-  const moveStage = useCallback((from: WritingStage, to: WritingStage) => {},
-  []);
+  const moveStage = useCallback(
+    (from: WritingStage, to: WritingStage) => {
+      if (from == 'create-tale' && to == 'tale-created') {
+        __saveTale(current, taleIndex, tale);
+      }
+    },
+    [__saveTale, current, taleIndex, tale],
+  );
 
   const formProps = useMemo(
     () => ({ tale, taleUpdate: setTale, moveStage }),

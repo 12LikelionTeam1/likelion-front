@@ -66,6 +66,7 @@ const TMP_DATA: TaleType[] = [
 
 export default function useTales() {
   const __loadTale = useCallback(async (date: Date, index: number) => {
+    console.log(date);
     return TMP_DATA[index - 1];
   }, []);
 

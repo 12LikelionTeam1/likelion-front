@@ -8,6 +8,7 @@ const LandingContainer = () => {
 
   const onGoogleLoginSuccessed = useCallback(
     (cr: CredentialResponse) => {
+      console.log(cr);
       __updateAccountInfo({ name: 'Kanei' });
     },
     [__updateAccountInfo],
