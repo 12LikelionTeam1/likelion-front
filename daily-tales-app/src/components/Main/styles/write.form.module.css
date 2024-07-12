@@ -26,3 +26,12 @@
   padding: 24px 12px;
   width: 100%;
 }
+
+.createInputWrapper {
+  height: 100%;
+}
+
+.createBtnWrpper {
+  width: 100%;
+  padding: 24px 12px;
+}
