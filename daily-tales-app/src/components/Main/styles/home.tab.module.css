@@ -1,0 +1,12 @@
+.profile {
+  width: 48px;
+  height: 48px;
+  border-radius: 24px;
+  background-color: #61686b;
+}
+
+.likeBtn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}

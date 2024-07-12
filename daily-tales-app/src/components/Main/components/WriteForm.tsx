@@ -6,6 +6,7 @@ import NanumText from '@components/common/NanumText/NanumText';
 import BreakLine from '@components/common/BreakLine/BreakLine';
 import styles from '../styles/write.form.module.css';
 import CButton from '@components/common/CButton/CButton';
+import CConfirm from '@components/common/CConfirm/CConfirm';
 
 type Props = {
   tale: TaleType;
@@ -59,7 +60,24 @@ const TaleInput = ({ prevValue, placehholder, onInputChange }: InputProps) => {
 };
 
 const CreateTaleForm = ({}: Props) => {
-  return <div>CreateTableForm</div>;
+  return (
+    <div className='flex flex-1 flex-col'>
+      <div className='flex flex-1 flex-row items-center'>
+        <div className={styles.sepLineL} />
+        <div className={`${styles.createInputWrapper} flex flex-1 p-3`}>
+          <TaleInput
+            placehholder='받아보고 싶은 글의 내용을 적어주세요'
+            onInputChange={() => {}}
+          />
+        </div>
+        <div className={styles.sepLineR} />
+      </div>
+      <BreakLine />
+      <div className={`${styles.createBtnWrpper} flex flex-row`}>
+        <CButton label='새로운 글 받기' onClicked={() => {}} />
+      </div>
+    </div>
+  );
 };
 
 const TaleCreatedForm = ({ tale, taleUpdate, moveStage }: Props) => {
@@ -123,6 +141,7 @@ const TaleCreatedForm = ({ tale, taleUpdate, moveStage }: Props) => {
 
 const ReportCreatedForm = ({ tale, taleUpdate, moveStage }: Props) => {
   const [report, setReport] = useState('');
+  const [isShareVisible, setIsShareVisible] = useState(false);
 
   const onSaveClicked = useCallback(() => {
     const clone = { ...tale };
@@ -136,29 +155,43 @@ const ReportCreatedForm = ({ tale, taleUpdate, moveStage }: Props) => {
   const onTaleShareClicked = useCallback(() => {}, []);
 
   return (
-    <div className='flex flex-col'>
-      <div className='p-3'>
-        <NanumText>{tale.tale!.content}</NanumText>
-      </div>
-      <BreakLine />
-      <div className='flex flex-row items-center'>
-        <div className={styles.sepLineL} />
-        <div className='flex-1 p-3'>
-          <TaleInput
-            prevValue={tale.report}
-            placehholder='글에 대한 감상문을 작성하고 공유 해보세요'
-            onInputChange={setReport}
+    <>
+      <div className='flex flex-col'>
+        <div className='p-3'>
+          <NanumText>{tale.tale!.content}</NanumText>
+        </div>
+        <BreakLine />
+        <div className='flex flex-row items-center'>
+          <div className={styles.sepLineL} />
+          <div className='flex-1 p-3'>
+            <TaleInput
+              prevValue={tale.report}
+              placehholder='글에 대한 감상문을 작성하고 공유 해보세요'
+              onInputChange={setReport}
+            />
+          </div>
+          <div className={styles.sepLineR} />
+        </div>
+        <BreakLine />
+        <div className={`${styles.bottoms} flex flex-row`}>
+          <CButton label='감상문 수정 하기' onClicked={onSaveClicked} />
+          <div className='gap-12' />
+          <CButton
+            label='감상문 공유 하기'
+            onClicked={() => setIsShareVisible(true)}
           />
         </div>
-        <div className={styles.sepLineR} />
       </div>
-      <BreakLine />
-      <div className={`${styles.bottoms} flex flex-row`}>
-        <CButton label='감상문 수정 하기' onClicked={onSaveClicked} />
-        <div className='gap-12' />
-        <CButton label='감상문 공유 하기' onClicked={onTaleShareClicked} />
-      </div>
-    </div>
+      {isShareVisible && (
+        <CConfirm
+          title='공유하기'
+          label='공유하기'
+          onConfirmed={onTaleShareClicked}
+          hide={() => setIsShareVisible(false)}>
+          <NanumText>{'#1 번째 글 ' + tale.tale!.title}</NanumText>
+        </CConfirm>
+      )}
+    </>
   );
 };
 
