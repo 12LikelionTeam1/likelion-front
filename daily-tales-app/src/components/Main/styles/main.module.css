@@ -1,0 +1,15 @@
+.header {
+  width: 100%;
+  padding: 12px;
+}
+
+.mypage {
+  margin-left: 12px;
+}
+
+.bottomTab {
+  height: 48px;
+  background-color: #ffffff;
+  position: sticky;
+  bottom: 0;
+}

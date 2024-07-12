@@ -1,0 +1,37 @@
+.sepLineL {
+  height: calc(100% + 24px);
+  border-right: 1px solid #fa9a9a;
+  width: 12px;
+}
+
+.sepLineR {
+  height: calc(100% + 24px);
+  border-left: 1px solid #fa9a9a;
+  width: 12px;
+}
+
+.taleInput {
+  height: auto;
+  outline: 0;
+  background-color: #f7f7f7;
+  color: #2d2d2d;
+  width: 100%;
+  font-family: 'NanumMyeongjo', sans-serif;
+  box-sizing: border-box;
+  overflow: hidden;
+  resize: none;
+}
+
+.bottoms {
+  padding: 24px 12px;
+  width: 100%;
+}
+
+.createInputWrapper {
+  height: 100%;
+}
+
+.createBtnWrpper {
+  width: 100%;
+  padding: 24px 12px;
+}

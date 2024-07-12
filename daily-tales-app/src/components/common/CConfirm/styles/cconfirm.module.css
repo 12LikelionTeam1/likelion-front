@@ -1,0 +1,21 @@
+.wrapper {
+  position: absolute;
+  width: calc(100% - 48px);
+  height: 180px;
+  left: 24px;
+  top: calc(50% - 90px);
+  border-radius: 8px;
+  background-color: #f7f7f7;
+}
+
+.closeBtn {
+  width: 24px;
+  height: 24px;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+}
+
+.btnWrapper {
+  width: 100%;
+}
