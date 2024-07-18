@@ -1,0 +1,152 @@
+.header {
+    display: inline-flex;
+}
+
+.header img{
+    display: flex;
+}
+
+.infocontainer {
+    display: flex;
+    padding: 10px;
+}
+
+.userinfo {
+    display: flex;
+    margin-right: 450px;
+}
+
+.savetab {
+    display: flex;
+    align-items: center;
+}
+
+.savetab a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.savetab img {
+    margin: 0 4px;
+}
+
+.profile {
+    display: flex;
+}
+
+.profile > img{
+    border: 30px solid grey;
+    border-radius: 50%;
+}
+
+.email{
+    display: flex;
+}
+
+.writingheader {
+    display: flex;
+    padding: 10px;
+}
+
+.writingheader img {
+    margin-right: 10px;
+}
+
+.writingheader p {
+    margin: 0;
+}
+
+.datepicker {
+    margin-left: 400px;
+}
+
+.writingcontent {
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    padding: 8px 8px;
+}
+
+.writingcontent span,button {
+    margin: 0;
+    color: #fa9a9a;
+}
+
+.badgeheader{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    margin-right: 600px;
+}
+
+.badgeheader img {
+    margin-right: 8px;
+}
+
+.analysiscontainer {
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.analysisheader {
+    display: flex;
+    margin-bottom: 12px;
+    margin-right: 580px;
+}
+
+.analysisheader img {
+    margin-right: 8px;
+}
+
+
+.read, .share, .keyword {
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+    margin: 5px;
+}
+
+.iconText {
+    display: inline-flex;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+}
+
+.iconText img {
+    margin-right: 10px;
+}
+
+.iconText p {
+    align-content: center;
+}
+
+.numread, .numshare {
+    display: flex;
+    justify-content: space-between;
+}
+
+.numread img, .numshare img {
+    margin-right: 4px;
+}
+
+.numread p, .numshare p {
+    margin: 0;
+    color: #fa9a9a;
+}
+
+.keywordcontent {
+    display: inline-flex;
+    gap: 30px;
+}
+
+.keywordcontent p {
+    background-color: #fa9a9a;
+    border-top-left-radius: 15px 15px;
+    border-top-right-radius: 15px 15px;
+    border-bottom-right-radius: 15px 15px;
+    border-bottom-left-radius: 15px 15px;
+    padding: 2px 15px;
+}

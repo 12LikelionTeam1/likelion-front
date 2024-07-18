@@ -14,6 +14,17 @@ const images = {
     heartFill: IMAGE_ROOT + '/icons/ic-heart-fill.png',
     homeFill: IMAGE_ROOT + '/icons/ic-home-fill.png',
     writeFill: IMAGE_ROOT + '/icons/ic-write-fill.png',
+    note: IMAGE_ROOT + '/icons/ic-note.png',
+    badge: IMAGE_ROOT + '/icons/ic-badge.png',
+    analysis: IMAGE_ROOT + '/icons/ic-analysis.png',
+    book: IMAGE_ROOT + '/icons/ic-book.png',
+    key: IMAGE_ROOT + '/icons/ic-key.png',
+    notebook: IMAGE_ROOT + '/icons/ic-notebook.png',
+    books: IMAGE_ROOT + '/icons/ic-books.png',
+    pens: IMAGE_ROOT + '/icons/ic-pens.png',
+    edit: IMAGE_ROOT + '/icons/ic-edit.png',
+
+
   },
   logo96: IMAGE_ROOT + '/logo-96.png',
   logos: IMAGE_ROOT + '/logo-s.png',
