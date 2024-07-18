@@ -36,7 +36,16 @@ const WritingTab = ({ current }: Props) => {
         __saveTale(current, taleIndex, tale);
       }
 
+      if (from == 'tale-created' && to == 'create-tale') {
+        // 새 글 받기 버튼
+      }
+
       if (from == 'tale-created' && to == 'report-created') {
+        // 감상문 저장 버튼
+      }
+
+      if (from == 'report-created' && to == 'report-created') {
+        // 감상문 수정 버튼
       }
     },
     [__saveTale, current, taleIndex, tale, keyword],

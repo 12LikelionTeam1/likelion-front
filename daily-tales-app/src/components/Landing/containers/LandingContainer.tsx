@@ -37,7 +37,7 @@ function parseToken(token: string): TokenPayloadType {
 }
 
 const TOKEN =
-  'eyJyZWdEYXRlIjoxNzIwNzkxMTIzMDcxLCJjYXQiOiJBQ0NFU1MiLCJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJhYmNkZWZnIiwiZXhwIjoxODA3MTkxMTIzfQ.THtUmgXyEhPgx4gu3ZKQpk18Cgb1WVAxrqgh-Y-IeiQ';
+  'eyJyZWdEYXRlIjoxNzIxMjIwMzIwOTQwLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImNhdCI6IkFDQ0VTUyJ9.eyJ1c2VySWQiOiJhYmNkZWZnIiwiZXhwIjoxNzIxMzA2NzIwfQ.YhdEMpNu04EoL6rjF50SwUICoazFZXoChjqEvDLBK7g';
 
 const LandingContainer = () => {
   const { __updateAccountInfo } = useAccount();
