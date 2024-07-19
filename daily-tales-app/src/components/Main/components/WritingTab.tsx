@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import BreakLine from '@components/common/BreakLine/BreakLine';
 import styles from '../styles/writing.tab.module.css';
-import useTales, { TaleType } from '@hooks/useTales';
+import useTales, { insertTale, TaleType, updateReport } from '@hooks/useTales';
 import { useEffect, useState } from 'react';
 import NanumText from '@components/common/NanumText/NanumText';
 import images from '@assets/images';
@@ -41,11 +41,11 @@ const WritingTab = ({ current }: Props) => {
       }
 
       if (from == 'tale-created' && to == 'report-created') {
-        // 감상문 저장 버튼
+        await insertTale(tale);
       }
 
       if (from == 'report-created' && to == 'report-created') {
-        // 감상문 수정 버튼
+        await updateReport(tale.tale!.id!, tale.report!);
       }
     },
     [__saveTale, current, taleIndex, tale, keyword],

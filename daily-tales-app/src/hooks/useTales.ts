@@ -143,7 +143,6 @@ export default function useTales() {
         TaleStorage.setTale(date, index, tale);
       } else if (tale.state == 'report-created') {
         TaleStorage.setTale(date, index, tale);
-        return insertTale(tale);
       }
     },
     [],
