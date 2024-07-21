@@ -29,6 +29,7 @@ const images = {
   logo96: IMAGE_ROOT + '/logo-96.png',
   logos: IMAGE_ROOT + '/logo-s.png',
   googleLogo: IMAGE_ROOT + '/ic-google-logo.png',
+  logoa: IMAGE_ROOT + '/logo-a.png',
 };
 
 export default images;
