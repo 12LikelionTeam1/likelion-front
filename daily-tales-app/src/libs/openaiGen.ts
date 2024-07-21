@@ -9,7 +9,7 @@ It will be Koreans who read what you wrote, so please write 500 in Korean
 
 #Keyword
 Below are the keywords related to what the reader wants to read. Please write a comment referring to the keywords
-@@KETWORD
+@@KEYWORD
 
 #Guideline
 Below are the guidelines for writing.
@@ -47,6 +47,6 @@ const PATH = 'ai/writing-generator';
 
 export default async function openaiGen(keyword: string): Promise<string> {
   return axios
-    .get(PATH + `?prompt=${PROMPT.replace('@@KEYWORD', keyword)}`)
+    .get(PATH + `?prompt=${PROMPT.replace(/(@@KEYWORD)/, keyword)}`)
     .then((res) => res.data.result);
 }

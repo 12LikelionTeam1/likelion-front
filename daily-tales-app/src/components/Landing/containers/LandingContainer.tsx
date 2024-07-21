@@ -36,9 +36,6 @@ function parseToken(token: string): TokenPayloadType {
   return JSON.parse(jsonPayload) as TokenPayloadType;
 }
 
-const TOKEN =
-  'eyJyZWdEYXRlIjoxNzIxMjIwMzIwOTQwLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiIsImNhdCI6IkFDQ0VTUyJ9.eyJ1c2VySWQiOiJhYmNkZWZnIiwiZXhwIjoxNzIxMzA2NzIwfQ.YhdEMpNu04EoL6rjF50SwUICoazFZXoChjqEvDLBK7g';
-
 const LandingContainer = () => {
   const { __updateAccountInfo } = useAccount();
 
@@ -48,21 +45,19 @@ const LandingContainer = () => {
       if (cr.credential) {
         console.log(parseToken(cr.credential));
 
-        __updateAccountInfo({
-          access_token: TOKEN,
-          refresh_token: TOKEN,
-          ...parseToken(cr.credential!),
-        });
-
-        // axios
-        //   .post('/oauth/google', {
-        //     access_token: cr.credential,
-        //   })
-        //   .then(({ data, status }) => {
-        //     if (status == 200) {
-
-        //     }
-        //   });
+        axios
+          .post('/oauth/google', {
+            token: cr.credential,
+          })
+          .then(({ data, status }) => {
+            if (status == 200) {
+              __updateAccountInfo({
+                access_token: data.access_token,
+                refresh_token: data.refresh_token,
+                ...parseToken(cr.credential!),
+              });
+            }
+          });
       }
     },
     [__updateAccountInfo],

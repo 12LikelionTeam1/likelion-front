@@ -63,7 +63,10 @@ export type TaleListRow = {
 };
 
 function dateToString(date: Date): string {
-  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+  const month = date.getMonth() + 1;
+  return `${date.getFullYear()}-${(month < 10 ? '0' : '') + month}-${
+    (date.getDate() < 10 ? '0' : '') + date.getDate()
+  }`;
 }
 
 function stringToDate(string: string): Date {
