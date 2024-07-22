@@ -29,15 +29,31 @@ const WritingTab = ({ current }: Props) => {
   const moveStage = useCallback(
     async (from: WritingStage, to: WritingStage) => {
       if (from == 'create-tale' && to == 'tale-created') {
-        const res = await openaiGen(keyword);
+        const res = JSON.parse(await openaiGen(keyword));
 
-        console.log(res);
+        setTale({
+          state: 'tale-created',
+          tale: {
+            title: res.title,
+            content: res.content,
+          },
+        });
 
-        __saveTale(current, taleIndex, tale);
+        __saveTale(current, taleIndex, {
+          state: 'tale-created',
+          tale: {
+            title: res.title,
+            content: res.content,
+          },
+        });
       }
 
       if (from == 'tale-created' && to == 'create-tale') {
-        // 새 글 받기 버튼
+        setTale({ state: 'create-tale' });
+
+        __saveTale(current, taleIndex, {
+          state: 'create-tale',
+        });
       }
 
       if (from == 'tale-created' && to == 'report-created') {

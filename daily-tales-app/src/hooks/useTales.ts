@@ -27,7 +27,7 @@ export type WritingType = {
   writtenAt: string;
 };
 
-const TaleStorage = {
+export const TaleStorage = {
   STORAGE_KEY: '@@TALE',
   dateInfoToKey: (date: Date, index: number): string =>
     `${TaleStorage.STORAGE_KEY}/${date.getFullYear()}${
@@ -47,6 +47,36 @@ const TaleStorage = {
       TaleStorage.dateInfoToKey(date, index),
       JSON.stringify(tale),
     ),
+  countTale: (date: Date, type: 'year' | 'month' | 'date') => {
+    const keys = [];
+
+    for (let i = 0; i < localStorage.length; i++)
+      if (
+        localStorage.key(i) != null &&
+        localStorage.key(i)!.startsWith(TaleStorage.STORAGE_KEY)
+      )
+        keys.push(localStorage.key(i)!);
+
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+
+    switch (type) {
+      case 'year':
+        return keys.filter((k) =>
+          k.startsWith(`${TaleStorage.STORAGE_KEY}/${year}`),
+        );
+      case 'month':
+        return keys.filter((k) =>
+          k.startsWith(`${TaleStorage.STORAGE_KEY}/${year}${month}`),
+        );
+      case 'date':
+        return keys.filter((k) =>
+          k.startsWith(
+            `${TaleStorage.STORAGE_KEY}/${year}${month}${date.getDate()}`,
+          ),
+        );
+    }
+  },
 } as const;
 
 const PATHS = {

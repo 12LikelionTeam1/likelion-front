@@ -7,6 +7,7 @@ import taleCount, {
   TaleDateQueryResponse,
   TaleMonthQueryResponse,
 } from '@libs/taleCount';
+import { TaleStorage } from '@hooks/useTales';
 
 type Props = {
   onDatePicked: (date: Date) => void;
@@ -130,7 +131,10 @@ const DatePicker = ({ onDatePicked }: Props) => {
 
       setTaleCounts({
         tag: 'year',
-        counts: [total_writings_of_year],
+        counts: [
+          total_writings_of_year +
+            TaleStorage.countTale(selected, 'year').length,
+        ],
       });
     }
 
@@ -156,7 +160,13 @@ const DatePicker = ({ onDatePicked }: Props) => {
           total_writings_per_month['OCTOBER'],
           total_writings_per_month['NOVEMBER'],
           total_writings_per_month['DECEMBER'],
-        ],
+        ].map((r, i) => {
+          const clone = new Date(selected);
+
+          clone.setMonth(i);
+
+          return r + TaleStorage.countTale(clone, 'month').length;
+        }),
       });
     }
 
@@ -169,7 +179,13 @@ const DatePicker = ({ onDatePicked }: Props) => {
 
       setTaleCounts({
         tag: 'date',
-        counts: total_writings_per_day,
+        counts: total_writings_per_day.map((r, i) => {
+          const clone = new Date(selected);
+
+          clone.setDate(i + 1);
+
+          return r + TaleStorage.countTale(clone, 'date').length;
+        }),
       });
     }
   }, [pickerData, selected]);
