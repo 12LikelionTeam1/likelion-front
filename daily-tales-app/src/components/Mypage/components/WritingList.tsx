@@ -15,7 +15,7 @@ const WritingList = ({ onDatePicked, openModal }: WritingListProps) => {
     const [shared, setShared] = useState<Shared>('noshared');
 
     const handleOpenModal = () => {
-        openModal('모달 내용');
+        openModal('#2 번째 글 고독한 예술가의 오후');
 };
 
 return (
@@ -27,6 +27,7 @@ return (
                 <DatePicker onDatePicked={(date) => { setCurrent(date); onDatePicked(date); }} />
             </div>
         </div>
+        
         <div className={styles.writingcontent}>
             <p>#1 번째 글 고독한 예술가의 오후</p>
             {shared === 'noshared' ? (

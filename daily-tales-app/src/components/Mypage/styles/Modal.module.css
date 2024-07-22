@@ -23,10 +23,12 @@
 .modalHeader {
     display: flex;
     text-align: center;
+    justify-content: center;
 }
 
 .closeButton {
     margin-top: 10px;
+    margin-left: 50px;
 }
 
 .actionButton {

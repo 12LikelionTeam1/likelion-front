@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from '../styles/mypage.module.css';
 import images from '@assets/images';
+import { Link } from 'react-router-dom';
 
 const UserInfo = () => {
     return (
@@ -10,11 +11,11 @@ const UserInfo = () => {
         <p>사용자 정보</p>
     </div>
     <div className={styles.savetab}>
-        <a href=''>
+        <Link to = ''>
             <img src={images.icons.heart} alt='heart' />
             문집 보러가기
             <img src={images.icons.next} alt='next' />
-        </a>
+        </Link>
         </div>
     </div>
     );
