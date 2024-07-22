@@ -1,7 +1,9 @@
+import { TokenPayloadType } from '@components/Landing/containers/LandingContainer';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export type AccountStateType = {
-  name: string;
+export type AccountStateType = TokenPayloadType & {
+  access_token: string;
+  refresh_token: string;
 };
 
 const INIT = null as AccountStateType | null;

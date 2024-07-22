@@ -59,7 +59,10 @@ const TaleInput = ({ prevValue, placehholder, onInputChange }: InputProps) => {
   );
 };
 
-const CreateTaleForm = ({}: Props) => {
+const CreateTaleForm = ({
+  moveStage,
+  onKeywordChange,
+}: Props & { onKeywordChange: (s: string) => void }) => {
   return (
     <div className='flex flex-1 flex-col'>
       <div className='flex flex-1 flex-row items-center'>
@@ -67,14 +70,17 @@ const CreateTaleForm = ({}: Props) => {
         <div className={`${styles.createInputWrapper} flex flex-1 p-3`}>
           <TaleInput
             placehholder='받아보고 싶은 글의 내용을 적어주세요'
-            onInputChange={() => {}}
+            onInputChange={onKeywordChange}
           />
         </div>
         <div className={styles.sepLineR} />
       </div>
       <BreakLine />
       <div className={`${styles.createBtnWrpper} flex flex-row`}>
-        <CButton label='새로운 글 받기' onClicked={() => {}} />
+        <CButton
+          label='새로운 글 받기'
+          onClicked={() => moveStage('create-tale', 'tale-created')}
+        />
       </div>
     </div>
   );

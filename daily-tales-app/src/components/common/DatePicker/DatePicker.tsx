@@ -3,6 +3,11 @@ import Backdrop from '../Backdrop/Backdrop';
 import NanumText from '../NanumText/NanumText';
 import images from '@assets/images';
 import styles from './styles/date.picker.module.css';
+import taleCount, {
+  TaleDateQueryResponse,
+  TaleMonthQueryResponse,
+} from '@libs/taleCount';
+import { TaleStorage } from '@hooks/useTales';
 
 type Props = {
   onDatePicked: (date: Date) => void;
@@ -34,6 +39,14 @@ const DatePicker = ({ onDatePicked }: Props) => {
     tag: 'year',
     current: selected.getFullYear(),
     list: [selected.getFullYear()],
+  });
+
+  const [taleCounts, setTaleCounts] = useState<{
+    tag: PickerTag;
+    counts: number[];
+  }>({
+    tag: 'year',
+    counts: [0],
   });
 
   const dayString = useMemo(() => {
@@ -108,6 +121,75 @@ const DatePicker = ({ onDatePicked }: Props) => {
     [selected],
   );
 
+  const loadTaleCount = useCallback(async () => {
+    if (pickerData.tag == 'year') {
+      const { total_writings_of_year } = (await taleCount({
+        type: 'month',
+        year: pickerData.current,
+        month: undefined,
+      })) as TaleMonthQueryResponse;
+
+      setTaleCounts({
+        tag: 'year',
+        counts: [
+          total_writings_of_year +
+            TaleStorage.countTale(selected, 'year').length,
+        ],
+      });
+    }
+
+    if (pickerData.tag == 'month') {
+      const { total_writings_per_month } = (await taleCount({
+        type: 'month',
+        year: selected.getFullYear(),
+        month: undefined,
+      })) as TaleMonthQueryResponse;
+
+      setTaleCounts({
+        tag: 'month',
+        counts: [
+          total_writings_per_month['JANUARY'],
+          total_writings_per_month['FEBRUARY'],
+          total_writings_per_month['MARCH'],
+          total_writings_per_month['APRIL'],
+          total_writings_per_month['MAY'],
+          total_writings_per_month['JUNE'],
+          total_writings_per_month['JULY'],
+          total_writings_per_month['AUGUST'],
+          total_writings_per_month['SEPTEMBER'],
+          total_writings_per_month['OCTOBER'],
+          total_writings_per_month['NOVEMBER'],
+          total_writings_per_month['DECEMBER'],
+        ].map((r, i) => {
+          const clone = new Date(selected);
+
+          clone.setMonth(i);
+
+          return r + TaleStorage.countTale(clone, 'month').length;
+        }),
+      });
+    }
+
+    if (pickerData.tag == 'date') {
+      const { total_writings_per_day } = (await taleCount({
+        type: 'date',
+        year: selected.getFullYear(),
+        month: selected.getMonth() + 1,
+      })) as TaleDateQueryResponse;
+
+      setTaleCounts({
+        tag: 'date',
+        counts: total_writings_per_day.map((r, i) => {
+          const clone = new Date(selected);
+
+          clone.setDate(i + 1);
+
+          return r + TaleStorage.countTale(clone, 'date').length;
+        }),
+      });
+    }
+  }, [pickerData, selected]);
+
   const onPrevClicked = useCallback(() => {
     pickDateValue(pickerData.current - 1);
   }, [pickDateValue, pickerData]);
@@ -119,6 +201,10 @@ const DatePicker = ({ onDatePicked }: Props) => {
   useEffect(() => {
     onDatePicked(selected);
   }, [selected, onDatePicked]);
+
+  useEffect(() => {
+    loadTaleCount();
+  }, [loadTaleCount]);
 
   return (
     <>
@@ -190,11 +276,21 @@ const DatePicker = ({ onDatePicked }: Props) => {
                     )}
                     {v == pickerData.current ? (
                       <a className={`${styles.pickerCount} text-xs text-black`}>
-                        {'5편'}
+                        {`${
+                          pickerData.tag == 'year'
+                            ? taleCounts.counts[0] ?? 0
+                            : taleCounts.counts[pickerData.current - 1] ?? 0
+                        }편`}
                       </a>
                     ) : (
                       <a className={`${styles.pickerCount} text-xs text-gray`}>
-                        {checkRangeValid(pickerData.tag, v) ? '3편' : ''}
+                        {checkRangeValid(pickerData.tag, v)
+                          ? `${
+                              pickerData.tag != 'year'
+                                ? taleCounts.counts[v - 1] ?? 0
+                                : ''
+                            }편`
+                          : ''}
                       </a>
                     )}
                   </div>
