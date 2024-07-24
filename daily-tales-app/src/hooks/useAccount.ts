@@ -8,7 +8,7 @@ import axios from 'axios';
 import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-const AccountStorage = {
+export const AccountStorage = {
   STORAGE_KEY: '@@ACCOUNT',
   loadAccountInfo: (): AccountStateType | undefined => {
     const saved = window.localStorage.getItem(AccountStorage.STORAGE_KEY);

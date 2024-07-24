@@ -86,9 +86,18 @@ const CreateTaleForm = ({
   );
 };
 
-const TaleCreatedForm = ({ tale, taleUpdate, moveStage }: Props) => {
+const TaleCreatedForm = ({
+  tale,
+  taleUpdate,
+  moveStage,
+  onReportChange,
+}: Props & { onReportChange: (s: string) => void }) => {
   const [input, setInput] = useState(tale.tale?.content);
   const [report, setReport] = useState('');
+
+  useEffect(() => {
+    onReportChange(report);
+  }, [onReportChange, report]);
 
   const onSaveClicked = useCallback(() => {
     const clone = { ...tale };

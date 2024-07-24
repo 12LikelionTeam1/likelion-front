@@ -11,6 +11,7 @@ export type TaleType = {
     visibility?: 'PUBLIC' | 'PRIVATE';
     writtenAt?: Date;
     commentary?: string;
+    keywords?: string[];
   };
   report?: string;
 };
@@ -154,6 +155,7 @@ export async function insertTale(tale: TaleType) {
     title: tale.tale!.title,
     content: tale.tale!.content,
     commentary: tale.report!,
+    keywords: tale.tale!.keywords,
   });
 }
 
