@@ -77,7 +77,7 @@ const WritingTab = ({ current }: Props) => {
       }
 
       if (from == 'report-created' && to == 'report-created') {
-        await updateReport(tale.tale!.id!, tale.report!);
+        await updateReport(tale.tale!.id!, report);
       }
     },
     [__saveTale, current, taleIndex, tale, keyword, report],
@@ -98,10 +98,6 @@ const WritingTab = ({ current }: Props) => {
     setTaleIndex(1);
     __loadTales(current).then(setTales);
   }, [current, __loadTales]);
-
-  useEffect(() => {
-    console.log(tales);
-  }, [tales]);
 
   return (
     <>
@@ -133,7 +129,10 @@ const WritingTab = ({ current }: Props) => {
           />
         )}
         {tale.state == 'report-created' && (
-          <WriteForm.ReportCreatedForm {...formProps} />
+          <WriteForm.ReportCreatedForm
+            {...formProps}
+            onReportChange={setReport}
+          />
         )}
       </div>
       {isIndexPickerVisible && (
