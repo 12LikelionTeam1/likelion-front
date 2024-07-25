@@ -7,7 +7,7 @@ import NanumText from '@components/common/NanumText/NanumText';
 import images from '@assets/images';
 import WriteForm from './WriteForm';
 import Backdrop from '@components/common/Backdrop/Backdrop';
-import openaiGen from '@libs/openaiGen';
+import openaiGen, { getKeyword } from '@libs/openaiGen';
 
 export type WritingStage = 'create-tale' | 'tale-created' | 'report-created';
 
@@ -25,6 +25,7 @@ const WritingTab = ({ current }: Props) => {
   const [tales, setTales] = useState<TaleType[]>([]);
   const [isIndexPickerVisible, setIsIndexPickerVisible] = useState(false);
   const [keyword, setKeyword] = useState('');
+  const [report, setReport] = useState('');
 
   const moveStage = useCallback(
     async (from: WritingStage, to: WritingStage) => {
@@ -57,14 +58,29 @@ const WritingTab = ({ current }: Props) => {
       }
 
       if (from == 'tale-created' && to == 'report-created') {
-        await insertTale(tale);
+        const clone = { ...tale };
+
+        clone.report = report;
+
+        clone.tale!.commentary = report;
+
+        const keywords = await getKeyword(clone.tale!.content);
+
+        clone.tale!.keywords = keywords;
+
+        clone.state = 'report-created';
+
+        await insertTale(clone).then(() => {
+          setTale(clone);
+          __saveTale(current, taleIndex, clone);
+        });
       }
 
       if (from == 'report-created' && to == 'report-created') {
-        await updateReport(tale.tale!.id!, tale.report!);
+        await updateReport(tale.tale!.id!, report);
       }
     },
-    [__saveTale, current, taleIndex, tale, keyword],
+    [__saveTale, current, taleIndex, tale, keyword, report],
   );
 
   const formProps = useMemo(
@@ -82,10 +98,6 @@ const WritingTab = ({ current }: Props) => {
     setTaleIndex(1);
     __loadTales(current).then(setTales);
   }, [current, __loadTales]);
-
-  useEffect(() => {
-    console.log(tales);
-  }, [tales]);
 
   return (
     <>
@@ -111,10 +123,16 @@ const WritingTab = ({ current }: Props) => {
           />
         )}
         {tale.state == 'tale-created' && (
-          <WriteForm.TaleCreatedForm {...formProps} />
+          <WriteForm.TaleCreatedForm
+            onReportChange={setReport}
+            {...formProps}
+          />
         )}
         {tale.state == 'report-created' && (
-          <WriteForm.ReportCreatedForm {...formProps} />
+          <WriteForm.ReportCreatedForm
+            {...formProps}
+            onReportChange={setReport}
+          />
         )}
       </div>
       {isIndexPickerVisible && (

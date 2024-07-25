@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
-import { TaleType } from '@hooks/useTales';
+import { TaleType, updateShare } from '@hooks/useTales';
 import { WritingStage } from './WritingTab';
 import NanumText from '@components/common/NanumText/NanumText';
 import BreakLine from '@components/common/BreakLine/BreakLine';
@@ -86,9 +86,18 @@ const CreateTaleForm = ({
   );
 };
 
-const TaleCreatedForm = ({ tale, taleUpdate, moveStage }: Props) => {
+const TaleCreatedForm = ({
+  tale,
+  taleUpdate,
+  moveStage,
+  onReportChange,
+}: Props & { onReportChange: (s: string) => void }) => {
   const [input, setInput] = useState(tale.tale?.content);
   const [report, setReport] = useState('');
+
+  useEffect(() => {
+    onReportChange(report);
+  }, [onReportChange, report]);
 
   const onSaveClicked = useCallback(() => {
     const clone = { ...tale };
@@ -145,7 +154,14 @@ const TaleCreatedForm = ({ tale, taleUpdate, moveStage }: Props) => {
   );
 };
 
-const ReportCreatedForm = ({ tale, taleUpdate, moveStage }: Props) => {
+const ReportCreatedForm = ({
+  tale,
+  taleUpdate,
+  moveStage,
+  onReportChange,
+}: Props & {
+  onReportChange: (s: string) => void;
+}) => {
   const [report, setReport] = useState('');
   const [isShareVisible, setIsShareVisible] = useState(false);
 
@@ -158,7 +174,13 @@ const ReportCreatedForm = ({ tale, taleUpdate, moveStage }: Props) => {
     moveStage('report-created', 'report-created');
   }, [tale, report, taleUpdate, moveStage]);
 
-  const onTaleShareClicked = useCallback(() => {}, []);
+  const onTaleShareClicked = useCallback(() => {
+    updateShare(tale.tale!.id!, true);
+  }, [tale]);
+
+  useEffect(() => {
+    onReportChange(report);
+  }, [onReportChange, report]);
 
   return (
     <>
