@@ -11,6 +11,7 @@ export type TaleType = {
     visibility?: 'PUBLIC' | 'PRIVATE';
     writtenAt?: Date;
     commentary?: string;
+    keywords?: string[];
   };
   report?: string;
 };
@@ -24,7 +25,7 @@ export type WritingType = {
   keywords: string[];
   content: string;
   commentary: string;
-  writtenAt: string;
+  written_at: string;
 };
 
 export const TaleStorage = {
@@ -47,6 +48,13 @@ export const TaleStorage = {
       TaleStorage.dateInfoToKey(date, index),
       JSON.stringify(tale),
     ),
+  getTale: (k: string) => {
+    const prev = window.localStorage.getItem(k);
+
+    if (prev) {
+      return JSON.parse(prev) as TaleType;
+    }
+  },
   countTale: (date: Date, type: 'year' | 'month' | 'date') => {
     const keys = [];
 
@@ -112,9 +120,7 @@ function stringToDate(string: string): Date {
 }
 
 export async function readTale(id: string): Promise<WritingType> {
-  return axios
-    .get(PATHS.writings + `/${id}`)
-    .then((d) => d.data as WritingType);
+  return axios.get(`writings/${id}`).then((d) => d.data as WritingType);
 }
 
 export async function readTaleList([from, to]: [Date?, Date?]): Promise<
@@ -133,15 +139,15 @@ export async function readTaleList([from, to]: [Date?, Date?]): Promise<
   const tales = await Promise.all(taleList.map((t) => readTale(t.id)));
 
   return tales.map(
-    (t) =>
+    (t, i) =>
       ({
         state: 'report-created',
         tale: {
-          id: t.id,
+          id: taleList[i].id,
           title: t.title,
           content: t.content,
           visibility: t.visibility,
-          writtenAt: stringToDate(t.writtenAt),
+          writtenAt: stringToDate(t.written_at),
           commentary: t.commentary,
         },
         report: t.commentary,
@@ -154,6 +160,7 @@ export async function insertTale(tale: TaleType) {
     title: tale.tale!.title,
     content: tale.tale!.content,
     commentary: tale.report!,
+    keywords: tale.tale!.keywords,
   });
 }
 
@@ -186,12 +193,11 @@ export default function useTales() {
 
     const local: TaleType[] = [];
 
-    for (
-      let i = 1, prev = TaleStorage.loadTale(date, i);
-      prev && prev.state != 'create-tale';
-      i++
-    )
-      local.push(prev);
+    local.push(
+      ...TaleStorage.countTale(date, 'date').map(
+        (k) => TaleStorage.getTale(k)!,
+      ),
+    );
 
     if (local.length == 0 || local[local.length - 1].state != 'create-tale')
       local.push({ state: 'create-tale' });
@@ -201,6 +207,8 @@ export default function useTales() {
     );
 
     res.forEach((v, i) => TaleStorage.setTale(date, i + 1, v));
+
+    console.log(res);
 
     return res;
   }, []);

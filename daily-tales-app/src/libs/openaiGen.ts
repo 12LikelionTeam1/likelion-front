@@ -10,3 +10,11 @@ export default async function openaiGen(keyword: string): Promise<string> {
     )
     .then((res) => res.data.result);
 }
+
+const KEYWORDS_PATH = 'ai/keywords-extractor';
+
+export async function getKeyword(contents: string): Promise<string[]> {
+  return axios
+    .get(KEYWORDS_PATH + `?writing=` + contents)
+    .then((res) => res.data.keywords);
+}

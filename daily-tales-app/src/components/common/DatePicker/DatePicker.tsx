@@ -264,8 +264,9 @@ const DatePicker = ({ onDatePicked }: Props) => {
                 <img src={images.icons.prev} alt='이전' />
               </button>
               <div className='flex flex-1 flex-row justify-evenly items-center'>
-                {pickerData.list.map((v) => (
+                {pickerData.list.map((v, i) => (
                   <div
+                    key={i}
                     className={`${styles.pickerItem} relative flex justify-center items-center`}>
                     {v == pickerData.current ? (
                       <a className='text-base text-red'>{v}</a>
