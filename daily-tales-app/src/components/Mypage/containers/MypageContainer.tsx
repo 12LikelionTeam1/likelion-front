@@ -1,9 +1,7 @@
 import Mypage from "../Mypage";
 
 const MypageContainer = () => {
-
-    return <Mypage/>;
-
+    return <Mypage />;
 }
 
 export default MypageContainer;

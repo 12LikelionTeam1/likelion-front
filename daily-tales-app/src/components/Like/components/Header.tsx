@@ -1,15 +1,17 @@
 import React from 'react';
-import styles from '../styles/mypage.module.css';
+import styles from '../styles/header.module.css';
 import images from '@assets/images';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
+    const navigate = useNavigate();
+
     return (
     <div className={styles.header}>
-        <Link to = '/'>
+        <button onClick={() => navigate(-1)}>
             <img src={images.icons.backarrow} alt='이전페이지' />
-        </Link>
-        <p>마이페이지</p>
+        </button>
+        <p>나의 문집</p>
     </div>
     );
 };

@@ -23,6 +23,8 @@ const images = {
     books: IMAGE_ROOT + '/icons/ic-books.png',
     pens: IMAGE_ROOT + '/icons/ic-pens.png',
     edit: IMAGE_ROOT + '/icons/ic-edit.png',
+    backarrow: IMAGE_ROOT + '/icons/ic-backarrow.png',
+
 
 
   },

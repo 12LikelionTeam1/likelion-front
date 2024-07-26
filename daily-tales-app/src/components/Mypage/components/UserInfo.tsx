@@ -7,15 +7,15 @@ const UserInfo = () => {
     return (
     <div className={styles.infocontainer}>
         <div className={styles.userinfo}>
-        <img src={images.icons.user} alt='usericon' />
-        <p>사용자 정보</p>
-    </div>
-    <div className={styles.savetab}>
-        <Link to = ''>
-            <img src={images.icons.heart} alt='heart' />
-            문집 보러가기
-            <img src={images.icons.next} alt='next' />
-        </Link>
+            <img src={images.icons.user} alt='usericon' />
+            <p>사용자 정보</p>
+        </div>
+        <div className={styles.liketab}>
+            <Link to = 'like'>
+                <img src={images.icons.heart} alt='heart' />
+                <p>문집 보러가기</p>
+                <img src={images.icons.next} alt='next' />
+            </Link>
         </div>
     </div>
     );

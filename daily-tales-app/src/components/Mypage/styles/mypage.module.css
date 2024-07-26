@@ -1,17 +1,18 @@
 .scroll {
-    overflow: auto; 
+    overflow: auto;
+    margin:0;
+    padding: 0;
+    width: 100%;
 }
 
 .header {
     width: 100%;
     display: flex;
     align-items: center;
-    position: relative;
     height: 50px;
 }
 
 .header img {
-    position: absolute;
     left: 0;
     width: 24px;
     height: 24px;
@@ -28,32 +29,42 @@
 
 .infocontainer {
     display: flex;
-    padding: 10px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    box-sizing: border-box;
+    width: 100%;
 }
 
 .userinfo {
     display: flex;
-    margin-right: 450px;
+    align-items: center;
+    padding: 10px 0;
 }
 
-.userinfo p {
-    margin-left: 8px;
-}
-
-.savetab {
+.liketab {
     display: flex;
     align-items: center;
 }
 
-.savetab a {
+.liketab a {
     display: flex;
     align-items: center;
-    text-decoration: none;
 }
 
-.savetab img {
-    margin: 0 4px;
+.userinfo img,
+.liketab a img {
+    margin-right: 5px;
 }
+
+.liketab a img:last-child {
+    margin-right: 0;
+}
+
+.liketab a p {
+    margin: 0 5px;
+}
+
 
 .profile {
     display: flex;
@@ -113,14 +124,14 @@
 }
 
 .datepicker {
-    margin-left: 400px;
+    margin-left: 440px;
 }
 
 .writingcontent {
     display: flex;
     justify-content:space-between;
     align-items: center;
-    padding: 8px 8px;
+    padding: 8px 20px;
 }
 
 .writingcontent span,button {
@@ -128,32 +139,52 @@
     color: #fa9a9a;
 }
 
+.emptyContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    padding: 20px 0;
+    padding-bottom: 40px;
+}
+
+.emptyContent img {
+    width: 200px;
+    height: auto;
+    padding: 60px 0;
+}
+
+
 .badgeheader{
     display: flex;
     justify-content: space-between;
     padding: 5px;
     margin-bottom: 5px;
     margin-top: 5px;
-    margin-right: 615px;
+    margin-right: 645px;
 }
 
 .badgeheader img {
-    margin-left: 10px;
+    margin-left: 12px;
 }
 
 .analysiscontainer {
-    padding: 16px;
+    padding: 13px;
     margin-bottom: 16px;
 }
 
 .analysisheader {
     display: flex;
-    margin-bottom: 12px;
-    margin-right: 580px;
+    justify-content: space-between;
+    padding: 0px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-right: 615px;
 }
 
 .analysisheader img {
-    margin-right: 8px;
+    
 }
 
 

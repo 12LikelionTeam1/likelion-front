@@ -9,9 +9,6 @@ interface ModalContextType {
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
-interface ModalProviderProps {
-    children: ReactNode;
-}
 
 export function ModalProvider({ children }: { children: ReactNode }) {
     const [isOpen, setIsOpen] = useState(false);
