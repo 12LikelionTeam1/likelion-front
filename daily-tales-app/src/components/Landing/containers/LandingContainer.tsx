@@ -41,10 +41,7 @@ const LandingContainer = () => {
 
   const onGoogleLoginSuccessed = useCallback(
     (cr: CredentialResponse) => {
-      console.log(cr);
       if (cr.credential) {
-        console.log(parseToken(cr.credential));
-
         axios
           .post('/oauth/google', {
             token: cr.credential,

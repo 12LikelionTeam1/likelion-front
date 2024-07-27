@@ -77,7 +77,14 @@ const WritingTab = ({ current }: Props) => {
       }
 
       if (from == 'report-created' && to == 'report-created') {
-        await updateReport(tale.tale!.id!, report);
+        await updateReport(tale.tale!.id!, report).then(() => {
+          const clone = { ...tale };
+
+          clone.report = report;
+          clone.tale!.commentary = report;
+
+          __saveTale(current, taleIndex, clone);
+        });
       }
     },
     [__saveTale, current, taleIndex, tale, keyword, report],
