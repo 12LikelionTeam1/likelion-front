@@ -34,11 +34,25 @@ type TaleType = {
 };
 
 type CardProps = {
-  tale: TaleType;
+  tale: TaleType & LoadTaleItem;
 };
 
 const TaleCard = ({ tale }: CardProps) => {
   const [isLiked, setIsLiked] = useState(false);
+
+  const likeClicked = useCallback(() => {
+    if (isLiked) {
+      axios.delete('/me/writing-collection/' + tale.id);
+
+      setIsLiked(false);
+    } else {
+      axios.post('/me/writing-collection', {
+        writing_id: tale.id,
+      });
+
+      setIsLiked(true);
+    }
+  }, [isLiked, tale]);
 
   return (
     <>
@@ -46,8 +60,8 @@ const TaleCard = ({ tale }: CardProps) => {
         <div className='flex flex-row'>
           <div className={styles.profile}></div>
           <div className='ml-3 flex flex-col justify-between flex-1'>
-            <a>{'홍길동 작가님'}</a>
-            <a className='text-sm text-gray'>{'1시간 전'}</a>
+            <a>{tale.writer.nickname}</a>
+            <a className='text-sm text-gray'>{tale.written_at}</a>
           </div>
         </div>
         <div className='gap-12' />
@@ -58,7 +72,7 @@ const TaleCard = ({ tale }: CardProps) => {
         <NanumText>{tale.commentary}</NanumText>
         <div className='gap-12' />
         <button
-          onClick={() => setIsLiked((prev) => !prev)}
+          onClick={likeClicked}
           className={`${styles.likeBtn} flex flex-row items-center`}>
           <img src={isLiked ? images.icons.heartFill : images.icons.heart} />
           <div className='gap-4' />
@@ -79,7 +93,7 @@ async function getDetail(id: string) {
 const HomeTab = () => {
   const [page, setPage] = useState(0);
   const [maximum, setMaximum] = useState(1);
-  const [tales, setTales] = useState<TaleType[]>([]);
+  const [tales, setTales] = useState<(TaleType & LoadTaleItem)[]>([]);
   const [loading, setLoading] = useState(false);
 
   const loadTale = useCallback(async () => {
@@ -92,7 +106,7 @@ const HomeTab = () => {
 
     const tales = await Promise.all(contents.map(({ id }) => getDetail(id)));
 
-    setTales(tales);
+    setTales(tales.map((t, i) => ({ ...t, ...contents[i] })));
 
     setPage(1);
     setLoading(false);
@@ -107,7 +121,13 @@ const HomeTab = () => {
       .get('/writings' + `?page=${page}`)
       .then((res) => res.data)) as LoadTaleResult;
 
-    const tales = await Promise.all(contents.map(({ id }) => getDetail(id)));
+    const tales = await Promise.all(
+      contents.map(async (c) => {
+        const response = await getDetail(c.id);
+
+        return { ...c, ...response };
+      }),
+    );
 
     setTales((prev) => [...prev, ...tales]);
 
