@@ -56,7 +56,7 @@ export const TaleStorage = {
     }
   },
   countTale: (date: Date, type: 'year' | 'month' | 'date') => {
-    const keys = [];
+    let keys = [];
 
     for (let i = 0; i < localStorage.length; i++)
       if (
@@ -70,20 +70,29 @@ export const TaleStorage = {
 
     switch (type) {
       case 'year':
-        return keys.filter((k) =>
+        keys = keys.filter((k) =>
           k.startsWith(`${TaleStorage.STORAGE_KEY}/${year}`),
         );
+        break;
       case 'month':
-        return keys.filter((k) =>
+        keys = keys.filter((k) =>
           k.startsWith(`${TaleStorage.STORAGE_KEY}/${year}${month}`),
         );
+        break;
       case 'date':
-        return keys.filter((k) =>
+        keys = keys.filter((k) =>
           k.startsWith(
             `${TaleStorage.STORAGE_KEY}/${year}${month}${date.getDate()}`,
           ),
         );
+        break;
     }
+
+    return keys.filter((k) => {
+      const tale = TaleStorage.getTale(k)?.tale;
+
+      return !tale || !tale.id;
+    });
   },
 } as const;
 
@@ -199,16 +208,15 @@ export default function useTales() {
       ),
     );
 
-    if (local.length == 0 || local[local.length - 1].state != 'create-tale')
-      local.push({ state: 'create-tale' });
-
-    const res = local.map(
-      (l) => remote.find((r) => r.tale!.title == l.tale?.title) ?? l,
+    const res = remote.map(
+      (r) => local.find((l) => r.tale!.title == l.tale?.title) ?? r,
     );
 
     res.forEach((v, i) => TaleStorage.setTale(date, i + 1, v));
 
-    console.log(res);
+    if (res.length == 0 || res[res.length - 1].state != 'create-tale')
+      if (dateToString(date) == dateToString(new Date()))
+        res.push({ state: 'create-tale' });
 
     return res;
   }, []);

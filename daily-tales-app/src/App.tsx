@@ -11,10 +11,40 @@ axios.interceptors.response.use(
   (res) => {
     return res;
   },
-  (error) => {
-    if (error.response && error.response.status == 401) {
-      AccountStorage.flushAccountInfo();
-      window.location.reload();
+  async (error) => {
+    if (
+      error.response &&
+      error.response.status == 401 &&
+      !error.config.url.endsWith('refresh')
+    ) {
+      if (error.response) {
+        const account = AccountStorage.loadAccountInfo();
+
+        if (account) {
+          try {
+            const access_token = (await axios
+              .post('/auth/refresh', {
+                refresh_token: account.refresh_token,
+              })
+              .then((res) => res.data.access_token)) as string;
+
+            AccountStorage.saveAccountInfo({ ...account, access_token });
+
+            axios.interceptors.request.use((res) => {
+              res.headers.Authorization = access_token;
+              return res;
+            });
+
+            axios(error.config);
+          } catch (_) {
+            AccountStorage.flushAccountInfo();
+            window.location.reload();
+          }
+        }
+      } else {
+        AccountStorage.flushAccountInfo();
+        window.location.reload();
+      }
     }
 
     return error;
