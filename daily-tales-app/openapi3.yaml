@@ -4,267 +4,53 @@ info:
   description: 하루한글 API 명세입니다.
   version: 0.0.1
 servers:
-- url: https://localhost:8080
+  - url: https://localhost:8080
 tags: []
 paths:
-  /api/me:
-    get:
-      tags:
-      - 내 정보
-      summary: 내 정보 API
-      description: 내 정보 API 입니다.
-      operationId: 내 정보 API
-      parameters:
-      - name: Authorization
-        in: header
-        description: access_token
-        required: true
-        schema:
-          type: string
-        example: token
-      responses:
-        "200":
-          description: "200"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/내 정보 응답'
-              examples:
-                내 정보 API:
-                  value: "{\n  \"display_id\" : \"nickname\",\n  \"nickname\" : \"\
-                    display_id\",\n  \"profile_image_url\" : \"www.example.com/profile.jpg\"\
-                    \n}"
-  /api/writings:
-    get:
-      tags:
-      - 글
-      summary: 다른 글 목록 조회 API
-      description: 다른 사람의 글 목록을 조회합니다. (PUBLIC 글만 조회 가능)
-      operationId: 다른 글 목록 조회 API
-      parameters:
-      - name: size
-        in: query
-        description: 페이지 크기 (기본 값 10)
-        required: true
-        schema:
-          type: string
-      - name: page
-        in: query
-        description: 페이지 번호 (기본 값 0)
-        required: true
-        schema:
-          type: string
-      - name: Authorization
-        in: header
-        description: access_token
-        required: true
-        schema:
-          type: string
-        example: 액세스 토큰
-      responses:
-        "200":
-          description: "200"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/다른 글 목록 조회 응답'
-              examples:
-                다른 글 목록 조회 API:
-                  value: "{\n  \"page\" : 0,\n  \"size\" : 10,\n  \"total_elements\"\
-                    \ : 20,\n  \"total_pages\" : 2,\n  \"contents\" : [ {\n    \"\
-                    id\" : \"writing_id1\",\n    \"title\" : \"title1\",\n    \"writer\"\
-                    \ : {\n      \"id\" : \"writer_id\",\n      \"nickname\" : \"\
-                    nickname\",\n      \"profile_image_url\" : \"www.example.com/profile.jpg\"\
-                    \n    },\n    \"written_at\" : \"2024-07-21\"\n  }, {\n    \"\
-                    id\" : \"writing_id2\",\n    \"title\" : \"title2\",\n    \"writer\"\
-                    \ : {\n      \"id\" : \"writer_id\",\n      \"nickname\" : \"\
-                    nickname\",\n      \"profile_image_url\" : \"www.example.com/profile.jpg\"\
-                    \n    },\n    \"written_at\" : \"2024-07-21\"\n  }, {\n    \"\
-                    id\" : \"writing_id3\",\n    \"title\" : \"title3\",\n    \"writer\"\
-                    \ : {\n      \"id\" : \"writer_id\",\n      \"nickname\" : \"\
-                    nickname\",\n      \"profile_image_url\" : \"www.example.com/profile.jpg\"\
-                    \n    },\n    \"written_at\" : \"2024-07-21\"\n  } ]\n}"
-  /api/auth/refresh:
-    post:
-      tags:
-      - 인증
-      summary: 리프레시 API
-      description: 리프레시 API 입니다.
-      operationId: 리프레시 API
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/리프레시 요청'
-            examples:
-              리프레시 API:
-                value: "{\n  \"refresh_token\" : \"refresh_token\"\n}"
-      responses:
-        "200":
-          description: "200"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/리프레시 응답'
-              examples:
-                리프레시 API:
-                  value: "{\n  \"access_token\" : \"access_token\"\n}"
-  /api/me/display-id:
-    patch:
-      tags:
-      - 내 정보
-      summary: 사용자 ID 수정 API
-      description: 사용자 ID 수정 API 입니다.
-      operationId: 사용자 ID 수정 API
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/사용자 ID 수정 요청'
-            examples:
-              사용자 ID 수정 API:
-                value: "{\n  \"display_id\" : \"display_id\"\n}"
-      responses:
-        "200":
-          description: "200"
-  /api/me/nickname:
-    patch:
-      tags:
-      - 내 정보
-      summary: 닉네임 수정 API
-      description: 닉네임 수정 API 입니다.
-      operationId: 닉네임 수정 API
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/닉네임 수정 요청'
-            examples:
-              닉네임 수정 API:
-                value: "{\n  \"nickname\" : \"nickname\"\n}"
-      responses:
-        "200":
-          description: "200"
-  /api/me/writing-collection:
-    get:
-      tags:
-      - 문집
-      summary: 문집 글 목록 조회 API
-      description: 문집에 등록된 글 목록을 조회하는 API 입니다.
-      operationId: 문집 글 목록 조회 API
-      parameters:
-      - name: Authorization
-        in: header
-        description: access_token
-        required: true
-        schema:
-          type: string
-        example: 액세스 토큰
-      responses:
-        "200":
-          description: "200"
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/문집 글 목록 조회 응답'
-              examples:
-                문집 글 목록 조회 API:
-                  value: "{\n  \"collection\" : [ {\n    \"id\" : \"writing_id1\"\
-                    ,\n    \"title\" : \"title1\",\n    \"writer\" : {\n      \"id\"\
-                    \ : \"writer_id\",\n      \"nickname\" : \"nickname\",\n     \
-                    \ \"profile_image_url\" : \"www.example.com/profile.jpg\"\n  \
-                    \  },\n    \"written_at\" : \"2024-07-21\"\n  }, {\n    \"id\"\
-                    \ : \"writing_id2\",\n    \"title\" : \"title2\",\n    \"writer\"\
-                    \ : {\n      \"id\" : \"writer_id\",\n      \"nickname\" : \"\
-                    nickname\",\n      \"profile_image_url\" : \"www.example.com/profile.jpg\"\
-                    \n    },\n    \"written_at\" : \"2024-07-21\"\n  }, {\n    \"\
-                    id\" : \"writing_id3\",\n    \"title\" : \"title3\",\n    \"writer\"\
-                    \ : {\n      \"id\" : \"writer_id\",\n      \"nickname\" : \"\
-                    nickname\",\n      \"profile_image_url\" : \"www.example.com/profile.jpg\"\
-                    \n    },\n    \"written_at\" : \"2024-07-21\"\n  } ]\n}"
-    post:
-      tags:
-      - 문집
-      summary: 문집 글 등록 API
-      description: 문집에 글을 등록하는 API 입니다.
-      operationId: 문집 글 등록 API
-      parameters:
-      - name: Authorization
-        in: header
-        description: access_token
-        required: true
-        schema:
-          type: string
-        example: 액세스 토큰
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/글 컬렉션에 글 등록 요청'
-            examples:
-              문집 글 등록 API:
-                value: "{\n  \"writing_id\" : \"writingId\"\n}"
-      responses:
-        "200":
-          description: "200"
   /api/me/writings:
     get:
       tags:
-      - 내 글 관리
+        - 내 글 관리
       summary: 글 목록 조회 API
       description: 글 목록 조회 API 입니다.
       operationId: 글 목록 조회 API
       parameters:
-      - name: end-date
-        in: query
-        description: "종료 (기본값 : 오늘"
-        required: true
-        schema:
-          type: string
-      - name: start-date
-        in: query
-        description: "시작 날짜 (기본값 : 오늘)"
-        required: true
-        schema:
-          type: string
-      - name: Authorization
-        in: header
-        description: access_token
-        required: true
-        schema:
-          type: string
-        example: 액세스 토큰
+        - name: end-date
+          in: query
+          description: '종료 (기본값 : 오늘'
+          required: true
+          schema:
+            type: string
+        - name: start-date
+          in: query
+          description: '시작 날짜 (기본값 : 오늘)'
+          required: true
+          schema:
+            type: string
       responses:
-        "200":
-          description: "200"
+        '200':
+          description: '200'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/글 목록 조회 응답'
               examples:
                 글 목록 조회 API:
-                  value: "{\n  \"writings\" : [ {\n    \"id\" : \"writing_id1\",\n\
+                  value:
+                    "{\n  \"writings\" : [ {\n    \"id\" : \"writing_id1\",\n\
                     \    \"title\" : \"title1\",\n    \"visibility\" : \"PUBLIC\"\
-                    ,\n    \"written_at\" : \"2024-07-21\"\n  }, {\n    \"id\" : \"\
+                    ,\n    \"writtenAt\" : \"2024-07-15\"\n  }, {\n    \"id\" : \"\
                     writing_id2\",\n    \"title\" : \"title2\",\n    \"visibility\"\
-                    \ : \"PUBLIC\",\n    \"written_at\" : \"2024-07-21\"\n  }, {\n\
+                    \ : \"PUBLIC\",\n    \"writtenAt\" : \"2024-07-15\"\n  }, {\n\
                     \    \"id\" : \"writing_id3\",\n    \"title\" : \"title3\",\n\
-                    \    \"visibility\" : \"PRIVATE\",\n    \"written_at\" : \"2024-07-21\"\
+                    \    \"visibility\" : \"PRIVATE\",\n    \"writtenAt\" : \"2024-07-15\"\
                     \n  } ]\n}"
     post:
       tags:
-      - 내 글 관리
+        - 내 글 관리
       summary: 글 등록 API
       description: 글 등록 API 입니다.
       operationId: 글 등록 API
-      parameters:
-      - name: Authorization
-        in: header
-        description: access_token
-        required: true
-        schema:
-          type: string
-        example: 액세스 토큰
       requestBody:
         content:
           application/json:
@@ -272,16 +58,17 @@ paths:
               $ref: '#/components/schemas/글 작성 요청'
             examples:
               글 등록 API:
-                value: "{\n  \"title\" : \"title\",\n  \"content\" : \"content\",\n\
-                  \  \"keywords\" : [ \"keyword1\", \"keyword2\" ],\n  \"commentary\"\
+                value:
+                  "{\n  \"title\" : \"title\",\n  \"keywords\" : [ \"keyword1\"\
+                  , \"keyword2\" ],\n  \"content\" : \"content\",\n  \"commentary\"\
                   \ : \"commentary\"\n}"
       responses:
-        "200":
-          description: "200"
+        '200':
+          description: '200'
   /api/oauth/google:
     post:
       tags:
-      - 인증
+        - 인증
       summary: 구글 OAuth 인증 API
       description: 구글 OAuth 인증 API 입니다.
       operationId: 구글 로그인 API
@@ -292,127 +79,83 @@ paths:
               $ref: '#/components/schemas/로그인 요청'
             examples:
               구글 로그인 API:
-                value: "{\n  \"token\" : \"access_token\"\n}"
+                value: "{\n  \"access_token\" : \"access_token\"\n}"
       responses:
-        "200":
-          description: "200"
+        '200':
+          description: '200'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/로그인 응답'
               examples:
                 구글 로그인 API:
-                  value: "{\n  \"access_token\" : \"access_token\",\n  \"refresh_token\"\
+                  value:
+                    "{\n  \"access_token\" : \"access_token\",\n  \"refresh_token\"\
                     \ : \"refresh_token\"\n}"
-  /api/writings/{writingId}:
-    get:
+  /api/oauth/kakao:
+    post:
       tags:
-      - 글
-      summary: 글 조회 API
-      description: 글 조회 API 입니다.
-      operationId: 글 조회 API
-      parameters:
-      - name: writingId
-        in: path
-        description: 글 ID
-        required: true
-        schema:
-          type: string
-      - name: Authorization
-        in: header
-        description: access_token
-        required: true
-        schema:
-          type: string
-        example: 액세스 토큰
+        - 인증
+      summary: 카카오 OAuth 인증 API
+      description: 카카오 OAuth 인증 API 입니다.
+      operationId: 카카오 로그인 API
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/로그인 요청'
+            examples:
+              카카오 로그인 API:
+                value: "{\n  \"access_token\" : \"access_token\"\n}"
       responses:
-        "200":
-          description: "200"
+        '200':
+          description: '200'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/글 조회 응답'
+                $ref: '#/components/schemas/로그인 응답'
               examples:
-                글 조회 API:
-                  value: "{\n  \"title\" : \"title\",\n  \"visibility\" : \"PUBLIC\"\
-                    ,\n  \"keywords\" : [ \"keyword1\", \"keyword2\" ],\n  \"content\"\
-                    \ : \"content\",\n  \"commentary\" : \"commentary\",\n  \"written_at\"\
-                    \ : \"2024-07-21\"\n}"
-  /api/me/writing-collection/{id}:
-    delete:
-      tags:
-      - 문집
-      summary: 문집 글 삭제 API
-      description: 문집에서 글을 삭제하는 API 입니다.
-      operationId: 문집 글 삭제 API
-      parameters:
-      - name: id
-        in: path
-        description: 글 ID
-        required: true
-        schema:
-          type: string
-      - name: Authorization
-        in: header
-        description: access_token
-        required: true
-        schema:
-          type: string
-        example: 액세스 토큰
-      responses:
-        "200":
-          description: "200"
+                카카오 로그인 API:
+                  value:
+                    "{\n  \"access_token\" : \"access_token\",\n  \"refresh_token\"\
+                    \ : \"refresh_token\"\n}"
   /api/me/writings/statistics/main-keywords:
     get:
       tags:
-      - 글 통계
+        - 글 통계
       summary: 메인 키워드 조회 API
       description: 메인 키워드 조회 API 입니다.
       operationId: 메인 키워드 조회 API
       parameters:
-      - name: size
-        in: query
-        description: 조회할 메인 키워드 개수
-        required: true
-        schema:
-          type: string
-      - name: Authorization
-        in: header
-        description: access_token
-        required: true
-        schema:
-          type: string
-        example: 액세스 토큰
+        - name: size
+          in: query
+          description: 조회할 메인 키워드 개수
+          required: true
+          schema:
+            type: string
       responses:
-        "200":
-          description: "200"
+        '200':
+          description: '200'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/메인 키워드 조회 응답'
               examples:
                 메인 키워드 조회 API:
-                  value: "{\n  \"main_keywords\" : [ {\n    \"keyword\" : \"keyword1\"\
+                  value:
+                    "{\n  \"main_keywords\" : [ {\n    \"keyword\" : \"keyword1\"\
                     ,\n    \"frequency\" : 1\n  }, {\n    \"keyword\" : \"keyword2\"\
                     ,\n    \"frequency\" : 2\n  } ]\n}"
   /api/me/writings/statistics/published-writings:
     get:
       tags:
-      - 글 통계
+        - 글 통계
       summary: 작성한 글 수 조회 API
       description: 작성한 글 수 조회 API 입니다.
       operationId: 작성한 글 수 조회 API
-      parameters:
-      - name: Authorization
-        in: header
-        description: access_token
-        required: true
-        schema:
-          type: string
-        example: 액세스 토큰
       responses:
-        "200":
-          description: "200"
+        '200':
+          description: '200'
           content:
             application/json:
               schema:
@@ -423,75 +166,63 @@ paths:
   /api/me/writings/statistics/total-writings-per-day:
     get:
       tags:
-      - 글 통계
+        - 글 통계
       summary: 일별 글 작성 통계 조회 API
       description: |-
         일별 글 작성 통계 조회 API 입니다.
         1일부터 선택한 월의 마지막 날까지의 글 작성 통계를 조회합니다.
       operationId: 일별 글 작성 통계 조회 API
       parameters:
-      - name: month
-        in: query
-        description: 조회할 월
-        required: true
-        schema:
-          type: string
-      - name: year
-        in: query
-        description: 조회할 연도
-        required: true
-        schema:
-          type: string
-      - name: Authorization
-        in: header
-        description: access_token
-        required: true
-        schema:
-          type: string
-        example: 액세스 토큰
+        - name: month
+          in: query
+          description: 조회할 월
+          required: true
+          schema:
+            type: string
+        - name: year
+          in: query
+          description: 조회할 연도
+          required: true
+          schema:
+            type: string
       responses:
-        "200":
-          description: "200"
+        '200':
+          description: '200'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/일별 글 작성 통계 조회 응답'
               examples:
                 일별 글 작성 통계 조회 API:
-                  value: "{\n  \"total_writings_per_day\" : [ 1, 1, 1, 1, 1, 1, 1,\
+                  value:
+                    "{\n  \"total_writings_per_day\" : [ 1, 1, 1, 1, 1, 1, 1,\
                     \ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,\
                     \ 1, 1, 1, 1 ]\n}"
   /api/me/writings/statistics/total-writings-per-month:
     get:
       tags:
-      - 글 통계
+        - 글 통계
       summary: 월별 글 작성 통계 조회 API
       description: 월별 글 작성 통계 조회 API 입니다.
       operationId: 월별 글 작성 통계 조회 API
       parameters:
-      - name: year
-        in: query
-        description: 조회할 연도
-        required: true
-        schema:
-          type: string
-      - name: Authorization
-        in: header
-        description: access_token
-        required: true
-        schema:
-          type: string
-        example: 액세스 토큰
+        - name: year
+          in: query
+          description: 조회할 연도
+          required: true
+          schema:
+            type: string
       responses:
-        "200":
-          description: "200"
+        '200':
+          description: '200'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/월별 글 작성 통계 조회 응답'
               examples:
                 월별 글 작성 통계 조회 API:
-                  value: "{\n  \"total_writings_of_year\" : 12,\n  \"total_writings_per_month\"\
+                  value:
+                    "{\n  \"total_writings_of_year\" : 12,\n  \"total_writings_per_month\"\
                     \ : {\n    \"JANUARY\" : 1,\n    \"FEBRUARY\" : 1,\n    \"MARCH\"\
                     \ : 1,\n    \"APRIL\" : 1,\n    \"MAY\" : 1,\n    \"JUNE\" : 1,\n\
                     \    \"JULY\" : 1,\n    \"AUGUST\" : 1,\n    \"SEPTEMBER\" : 1,\n\
@@ -500,24 +231,17 @@ paths:
   /api/me/writings/{id}/commentary:
     patch:
       tags:
-      - 내 글 관리
+        - 내 글 관리
       summary: 글 감상문 수정 API
       description: 글 감상문 수정 API 입니다.
       operationId: 글 감상문 수정 API
       parameters:
-      - name: id
-        in: path
-        description: 글 ID
-        required: true
-        schema:
-          type: string
-      - name: Authorization
-        in: header
-        description: access_token
-        required: true
-        schema:
-          type: string
-        example: 액세스 토큰
+        - name: id
+          in: path
+          description: 글 ID
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -527,29 +251,22 @@ paths:
               글 감상문 수정 API:
                 value: "{\n  \"commentary\" : \"commentary\"\n}"
       responses:
-        "200":
-          description: "200"
+        '200':
+          description: '200'
   /api/me/writings/{id}/visibility:
     patch:
       tags:
-      - 내 글 관리
+        - 내 글 관리
       summary: 글 공유 범위 수정 API
       description: "글 공유 범위 수정 API 입니다.\n공유 범위 : PUBLIC, PRIVATE"
       operationId: 글 공유 범위 수정 API
       parameters:
-      - name: id
-        in: path
-        description: 글 ID
-        required: true
-        schema:
-          type: string
-      - name: Authorization
-        in: header
-        description: access_token
-        required: true
-        schema:
-          type: string
-        example: 액세스 토큰
+        - name: id
+          in: path
+          description: 글 ID
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -559,10 +276,31 @@ paths:
               글 공유 범위 수정 API:
                 value: "{\n  \"visibility\" : \"PUBLIC\"\n}"
       responses:
-        "200":
-          description: "200"
+        '200':
+          description: '200'
 components:
   schemas:
+    글 목록 조회 응답:
+      title: 글 목록 조회 응답
+      type: object
+      properties:
+        writings:
+          type: array
+          items:
+            type: object
+            properties:
+              writtenAt:
+                type: string
+                description: 글 작성일
+              visibility:
+                type: string
+                description: 글 공개 범위
+              id:
+                type: string
+                description: 글 ID
+              title:
+                type: string
+                description: 글 제목
     로그인 응답:
       title: 로그인 응답
       type: object
@@ -573,78 +311,13 @@ components:
         refresh_token:
           type: string
           description: 리프레시 토큰
-    문집 글 목록 조회 응답:
-      title: 문집 글 목록 조회 응답
+    로그인 요청:
+      title: 로그인 요청
       type: object
       properties:
-        collection:
-          type: array
-          items:
-            type: object
-            properties:
-              written_at:
-                type: string
-                description: 글 작성일
-              writer:
-                type: object
-                properties:
-                  nickname:
-                    type: string
-                    description: 작성자 닉네임
-                  profile_image_url:
-                    type: string
-                    description: 작성자 프로필
-                  id:
-                    type: string
-                    description: 작성자 ID
-              id:
-                type: string
-                description: 글 ID
-              title:
-                type: string
-                description: 글 제목
-    다른 글 목록 조회 응답:
-      title: 다른 글 목록 조회 응답
-      type: object
-      properties:
-        size:
-          type: number
-          description: 페이지 크기
-        contents:
-          type: array
-          items:
-            type: object
-            properties:
-              written_at:
-                type: string
-                description: 작성일
-              writer:
-                type: object
-                properties:
-                  nickname:
-                    type: string
-                    description: 작성자 닉네임
-                  profile_image_url:
-                    type: string
-                    description: 작성자 프로필
-                  id:
-                    type: string
-                    description: 작성자 ID
-              id:
-                type: string
-                description: 글 ID
-              title:
-                type: string
-                description: 글 제목
-        total_elements:
-          type: number
-          description: 전체 글 수
-        total_pages:
-          type: number
-          description: 전체 페이지 수
-        page:
-          type: number
-          description: 페이지 번호
+        access_token:
+          type: string
+          description: 인증 코드
     메인 키워드 조회 응답:
       title: 메인 키워드 조회 응답
       type: object
@@ -660,61 +333,6 @@ components:
               frequency:
                 type: number
                 description: 키워드 등장 횟수
-    사용자 ID 수정 요청:
-      title: 사용자 ID 수정 요청
-      type: object
-      properties:
-        display_id:
-          type: string
-          description: 사용자 ID
-    감상문 수정 요청:
-      title: 감상문 수정 요청
-      type: object
-      properties:
-        commentary:
-          type: string
-          description: 감상문
-    글 공유 범위 수정 요청:
-      title: 글 공유 범위 수정 요청
-      type: object
-      properties:
-        visibility:
-          type: string
-          description: 글의 공유 범위
-    리프레시 응답:
-      title: 리프레시 응답
-      type: object
-      properties:
-        access_token:
-          type: string
-          description: 액세스 토큰
-    닉네임 수정 요청:
-      title: 닉네임 수정 요청
-      type: object
-      properties:
-        nickname:
-          type: string
-          description: 닉네임
-    내 정보 응답:
-      title: 내 정보 응답
-      type: object
-      properties:
-        display_id:
-          type: string
-          description: 사용자 ID (표시용)
-        nickname:
-          type: string
-          description: 닉네임
-        profile_image_url:
-          type: string
-          description: 프로필 이미지 주소
-    로그인 요청:
-      title: 로그인 요청
-      type: object
-      properties:
-        token:
-          type: string
-          description: 인증 코드
     일별 글 작성 통계 조회 응답:
       title: 일별 글 작성 통계 조회 응답
       type: object
@@ -724,17 +342,10 @@ components:
           description: 일마다 작성한 글 수
           items:
             oneOf:
-            - type: object
-            - type: boolean
-            - type: string
-            - type: number
-    글 컬렉션에 글 등록 요청:
-      title: 글 컬렉션에 글 등록 요청
-      type: object
-      properties:
-        writing_id:
-          type: string
-          description: 글 ID
+              - type: object
+              - type: boolean
+              - type: string
+              - type: number
     월별 글 작성 통계 조회 응답:
       title: 월별 글 작성 통계 조회 응답
       type: object
@@ -781,19 +392,33 @@ components:
         total_writings_of_year:
           type: number
           description: 연간 작성한 글의 갯수
+    감상문 수정 요청:
+      title: 감상문 수정 요청
+      type: object
+      properties:
+        commentary:
+          type: string
+          description: 감상문
+    글 공유 범위 수정 요청:
+      title: 글 공유 범위 수정 요청
+      type: object
+      properties:
+        visibility:
+          type: string
+          description: 글의 공유 범위
     글 작성 요청:
       title: 글 작성 요청
       type: object
       properties:
         keywords:
           type: array
-          description: 글의 키워드
+          description: 글의 주요 키워드
           items:
             oneOf:
-            - type: object
-            - type: boolean
-            - type: string
-            - type: number
+              - type: object
+              - type: boolean
+              - type: string
+              - type: number
         title:
           type: string
           description: 글의 제목
@@ -803,34 +428,6 @@ components:
         content:
           type: string
           description: 글의 내용
-    글 조회 응답:
-      title: 글 조회 응답
-      type: object
-      properties:
-        keywords:
-          type: array
-          description: 키워드
-          items:
-            oneOf:
-            - type: object
-            - type: boolean
-            - type: string
-            - type: number
-        visibility:
-          type: string
-          description: 글 공개 여부
-        written_at:
-          type: string
-          description: 작성일
-        title:
-          type: string
-          description: 글 제목
-        commentary:
-          type: string
-          description: 감상문
-        content:
-          type: string
-          description: 글 내용
     작성한 글 수 조회 응답:
       title: 작성한 글 수 조회 응답
       type: object
@@ -838,31 +435,3 @@ components:
         published_writings:
           type: number
           description: 작성한 글 수
-    글 목록 조회 응답:
-      title: 글 목록 조회 응답
-      type: object
-      properties:
-        writings:
-          type: array
-          items:
-            type: object
-            properties:
-              visibility:
-                type: string
-                description: 글 공개 범위
-              written_at:
-                type: string
-                description: 글 작성일
-              id:
-                type: string
-                description: 글 ID
-              title:
-                type: string
-                description: 글 제목
-    리프레시 요청:
-      title: 리프레시 요청
-      type: object
-      properties:
-        refresh_token:
-          type: string
-          description: 리프레시 토큰

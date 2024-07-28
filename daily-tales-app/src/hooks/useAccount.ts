@@ -4,10 +4,11 @@ import {
   updateAccountInfo,
 } from '@store/account/slice';
 import { RootStoreStateType } from '@store/store';
+import axios from 'axios';
 import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-const AccountStorage = {
+export const AccountStorage = {
   STORAGE_KEY: '@@ACCOUNT',
   loadAccountInfo: (): AccountStateType | undefined => {
     const saved = window.localStorage.getItem(AccountStorage.STORAGE_KEY);
@@ -32,6 +33,10 @@ export default function useAccount() {
 
   const __updateAccountInfo = useCallback(
     (info: AccountStateType) => {
+      axios.interceptors.request.use((config) => {
+        config.headers.Authorization = info.access_token;
+        return config;
+      });
       dispatch(updateAccountInfo(info));
       AccountStorage.saveAccountInfo(info);
     },

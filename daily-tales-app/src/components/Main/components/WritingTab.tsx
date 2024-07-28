@@ -1,12 +1,13 @@
 import React, { useCallback, useMemo } from 'react';
 import BreakLine from '@components/common/BreakLine/BreakLine';
 import styles from '../styles/writing.tab.module.css';
-import useTales, { TaleType } from '@hooks/useTales';
+import useTales, { insertTale, TaleType, updateReport } from '@hooks/useTales';
 import { useEffect, useState } from 'react';
 import NanumText from '@components/common/NanumText/NanumText';
 import images from '@assets/images';
 import WriteForm from './WriteForm';
 import Backdrop from '@components/common/Backdrop/Backdrop';
+import openaiGen, { getKeyword } from '@libs/openaiGen';
 
 export type WritingStage = 'create-tale' | 'tale-created' | 'report-created';
 
@@ -23,14 +24,70 @@ const WritingTab = ({ current }: Props) => {
   });
   const [tales, setTales] = useState<TaleType[]>([]);
   const [isIndexPickerVisible, setIsIndexPickerVisible] = useState(false);
+  const [keyword, setKeyword] = useState('');
+  const [report, setReport] = useState('');
 
   const moveStage = useCallback(
-    (from: WritingStage, to: WritingStage) => {
+    async (from: WritingStage, to: WritingStage) => {
       if (from == 'create-tale' && to == 'tale-created') {
-        __saveTale(current, taleIndex, tale);
+        const res = JSON.parse(await openaiGen(keyword));
+
+        setTale({
+          state: 'tale-created',
+          tale: {
+            title: res.title,
+            content: res.content,
+          },
+        });
+
+        __saveTale(current, taleIndex, {
+          state: 'tale-created',
+          tale: {
+            title: res.title,
+            content: res.content,
+          },
+        });
+      }
+
+      if (from == 'tale-created' && to == 'create-tale') {
+        setTale({ state: 'create-tale' });
+
+        __saveTale(current, taleIndex, {
+          state: 'create-tale',
+        });
+      }
+
+      if (from == 'tale-created' && to == 'report-created') {
+        const clone = { ...tale };
+
+        clone.report = report;
+
+        clone.tale!.commentary = report;
+
+        const keywords = await getKeyword(clone.tale!.content);
+
+        clone.tale!.keywords = keywords;
+
+        clone.state = 'report-created';
+
+        await insertTale(clone).then(() => {
+          setTale(clone);
+          __saveTale(current, taleIndex, clone);
+        });
+      }
+
+      if (from == 'report-created' && to == 'report-created') {
+        await updateReport(tale.tale!.id!, report).then(() => {
+          const clone = { ...tale };
+
+          clone.report = report;
+          clone.tale!.commentary = report;
+
+          __saveTale(current, taleIndex, clone);
+        });
       }
     },
-    [__saveTale, current, taleIndex, tale],
+    [__saveTale, current, taleIndex, tale, keyword, report],
   );
 
   const formProps = useMemo(
@@ -39,17 +96,15 @@ const WritingTab = ({ current }: Props) => {
   );
 
   useEffect(() => {
-    __loadTale(current, taleIndex).then(setTale);
+    __loadTale(current, taleIndex).then((t) =>
+      setTale(t ?? { state: 'create-tale' }),
+    );
   }, [current, taleIndex, __loadTale]);
 
   useEffect(() => {
     setTaleIndex(1);
     __loadTales(current).then(setTales);
   }, [current, __loadTales]);
-
-  useEffect(() => {
-    console.log(tales);
-  }, [tales]);
 
   return (
     <>
@@ -69,13 +124,22 @@ const WritingTab = ({ current }: Props) => {
         </div>
         <BreakLine />
         {tale.state == 'create-tale' && (
-          <WriteForm.CreateTaleForm {...formProps} />
+          <WriteForm.CreateTaleForm
+            {...formProps}
+            onKeywordChange={setKeyword}
+          />
         )}
         {tale.state == 'tale-created' && (
-          <WriteForm.TaleCreatedForm {...formProps} />
+          <WriteForm.TaleCreatedForm
+            onReportChange={setReport}
+            {...formProps}
+          />
         )}
         {tale.state == 'report-created' && (
-          <WriteForm.ReportCreatedForm {...formProps} />
+          <WriteForm.ReportCreatedForm
+            {...formProps}
+            onReportChange={setReport}
+          />
         )}
       </div>
       {isIndexPickerVisible && (
