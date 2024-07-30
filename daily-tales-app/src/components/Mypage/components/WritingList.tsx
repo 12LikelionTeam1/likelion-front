@@ -9,16 +9,18 @@ type Shared = 'shared' | 'noshared';
 interface WritingListProps {
     onDatePicked: (date: Date) => void;
     openModal: (content: string) => void;
+    updateWritingVisibility: (id: string, visibility: 'PUBLIC' | 'PRIVATE') => void;
 }
 
 const ModalContent = <NanumText>#2 번째 글 고독한 예술가의 오후</NanumText>
 
-const WritingList = ({ onDatePicked, openModal }: WritingListProps) => {
+const WritingList = ({ onDatePicked, openModal, updateWritingVisibility }: WritingListProps) => {
     const [current, setCurrent] = useState(new Date());
     const [shared, setShared] = useState<Shared>('noshared');
 
-    const handleOpenModal = () => {
+    const handleOpenModal = (id : string) => {
         openModal(ModalContent);
+        updateWritingVisibility(id, 'PUBLIC');
 };
 
     const writings = [
@@ -43,14 +45,14 @@ return (
                     {writing.shared ? (
                         <span>감상 공유중</span>
                     ) : (
-                        <button onClick={handleOpenModal} className={styles.closeButton}>감상 공유하기</button>
+                        <button onClick={() => handleOpenModal(writing.id)}  className={styles.closeButton}>감상 공유하기</button>
                     )}
                 </div>
                 ))
             ) : (
                 <div className={styles.emptyContent}>
                     <img src={images.logoa} alt='empty' />
-                    <NanumText>감상문을 작성하고</NanumText>
+                    <NanumText>{'감상문을 작성하고'}</NanumText>
                     <NanumText>공유해보세요!</NanumText>
                 </div>
             )}

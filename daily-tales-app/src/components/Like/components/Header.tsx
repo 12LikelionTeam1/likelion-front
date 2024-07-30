@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../styles/header.module.css';
+import styles from '../styles/like.module.css';
 import images from '@assets/images';
 import { useNavigate } from 'react-router-dom';
 
