@@ -1,9 +1,11 @@
 import { configureStore, createSelector } from '@reduxjs/toolkit';
 import account from './account/slice';
+import liked from './liked/slice';
 
 const store = configureStore({
   reducer: {
     account,
+    liked,
   },
 });
 
