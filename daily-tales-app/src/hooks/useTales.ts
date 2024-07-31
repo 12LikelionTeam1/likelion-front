@@ -89,9 +89,8 @@ export const TaleStorage = {
     }
 
     return keys.filter((k) => {
-      const tale = TaleStorage.getTale(k)?.tale;
-
-      return !tale || !tale.id;
+      const tale = TaleStorage.getTale(k);
+      return tale?.state == 'create-tale';
     });
   },
 } as const;
@@ -211,6 +210,9 @@ export default function useTales() {
     const res = remote.map(
       (r) => local.find((l) => r.tale!.title == l.tale?.title) ?? r,
     );
+
+    for (const lt of local)
+      if (!res.find((v) => v.tale!.title == lt.tale?.title)) res.push(lt);
 
     res.forEach((v, i) => TaleStorage.setTale(date, i + 1, v));
 
