@@ -5,7 +5,7 @@ import store from '@store/store';
 import axios from 'axios';
 import { AccountStorage } from '@hooks/useAccount';
 
-axios.defaults.baseURL = 'http://34.22.100.127/api';
+axios.defaults.baseURL = 'https://dailytales.kro.kr/api';
 
 axios.interceptors.response.use(
   (res) => {
