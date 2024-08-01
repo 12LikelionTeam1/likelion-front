@@ -1,9 +1,10 @@
 import BreakLine from '@components/common/BreakLine/BreakLine';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import styles from '../styles/home.tab.module.css';
 import NanumText from '@components/common/NanumText/NanumText';
 import images from '@assets/images';
 import axios from 'axios';
+import useLiked from '@hooks/useLiked';
 
 type LoadTaleItem = {
   id: string;
@@ -38,21 +39,27 @@ type CardProps = {
 };
 
 const TaleCard = ({ tale }: CardProps) => {
-  const [isLiked, setIsLiked] = useState(false);
+  const { liked, __addLiked, __deleteLiked } = useLiked();
+
+  const isLiked = useMemo(() => {
+    return liked.liked.includes(tale.id);
+  }, [liked, tale]);
 
   const likeClicked = useCallback(() => {
     if (isLiked) {
-      axios.delete('/me/writing-collection/' + tale.id);
-
-      setIsLiked(false);
-    } else {
-      axios.post('/me/writing-collection', {
-        writing_id: tale.id,
+      axios.delete('/me/writing-collection/' + tale.id).then(() => {
+        __deleteLiked(tale.id);
       });
-
-      setIsLiked(true);
+    } else {
+      axios
+        .post('/me/writing-collection', {
+          writing_id: tale.id,
+        })
+        .then(() => {
+          __addLiked(tale.id);
+        });
     }
-  }, [isLiked, tale]);
+  }, [isLiked, tale, __addLiked, __deleteLiked]);
 
   return (
     <>
@@ -60,7 +67,7 @@ const TaleCard = ({ tale }: CardProps) => {
         <div className='flex flex-row'>
           <div className={styles.profile}></div>
           <div className='ml-3 flex flex-col justify-between flex-1'>
-            <a>{tale.writer.nickname}</a>
+            <a>{tale.writer.nickname.slice(0, 10) + '...'}</a>
             <a className='text-sm text-gray'>{tale.written_at}</a>
           </div>
         </div>

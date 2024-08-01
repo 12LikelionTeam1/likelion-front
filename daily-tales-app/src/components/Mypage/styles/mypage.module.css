@@ -183,10 +183,6 @@
     margin-right: 615px;
 }
 
-.analysisheader img {
-    
-}
-
 
 .read, .share, .keyword {
     display: flex;
@@ -230,10 +226,10 @@
 }
 
 .keywordcontent p {
-    background-color: #fa9a9a;
-    border-top-left-radius: 15px 15px;
-    border-top-right-radius: 15px 15px;
-    border-bottom-right-radius: 15px 15px;
-    border-bottom-left-radius: 15px 15px;
-    padding: 2px 15px;
+    background-color: #fa9a9a;  
+    border-radius: 15px;
+    padding: 10px 20px;
+    text-align: center;
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+    margin: 5px;
 }

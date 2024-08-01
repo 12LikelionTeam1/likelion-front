@@ -1,6 +1,7 @@
 import React from "react";
-import styles from '../styles/header.module.css';
+import styles from '../styles/like.module.css';
 import { WritingCollectionType } from "../containers/LikeContainer";
+import NanumText from "@components/common/NanumText/NanumText";
 
 interface LikeProps {
     writingCollection: WritingCollectionType[];
@@ -14,9 +15,13 @@ const WritingCollection = ({ writingCollection }: LikeProps) => {
             {writingCollection.map((writing) => (
             <li key={writing.id} className={styles.writingItem}>
                 <img src={writing.writer.profile_image_url} alt="Profile" className={styles.profileImage} />
-                <p>{writing.writer.nickname} 작가님</p>
-                <p>{writing.written_at}</p>
-                <p>{writing.title}</p>
+                <div className={styles.writingDetails}>
+                    <p className={styles.nickname}>{writing.writer.nickname} 작가님</p>
+                    <p className={styles.date}>{new Date(writing.written_at).toLocaleDateString()}</p>
+                </div>
+                <div className="title">
+                    <NanumText>{writing.title}</NanumText>
+                </div>
             </li>
         ))}
         </ul>

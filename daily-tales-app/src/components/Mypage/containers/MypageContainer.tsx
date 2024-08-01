@@ -55,7 +55,7 @@ const MypageContainer = () => {
                 Authorization: `Bearer ${account.access_token}`,
             },
             params: {
-                size: '10', // size 조정하기
+                size: '6',
                 },
             });
             if (response.status === 200) {
@@ -136,4 +136,4 @@ const MypageContainer = () => {
     return <Mypage mainKeywords={mainKeywords} publishedWritings={publishedWritings} userInfo={userInfo} updateWritingVisibility={updateWritingVisibility} writings={writings}/>;
 }
 
-export default MypageContainer;
+export default MypageContainer; 
