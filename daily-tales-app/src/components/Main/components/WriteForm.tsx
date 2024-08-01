@@ -165,6 +165,10 @@ const ReportCreatedForm = ({
   const [report, setReport] = useState('');
   const [isShareVisible, setIsShareVisible] = useState(false);
 
+  useEffect(() => {
+    console.log(tale);
+  }, [tale]);
+
   const onSaveClicked = useCallback(() => {
     const clone = { ...tale };
 
@@ -175,6 +179,7 @@ const ReportCreatedForm = ({
   }, [tale, report, taleUpdate, moveStage]);
 
   const onTaleShareClicked = useCallback(() => {
+    console.log(tale);
     updateShare(tale.tale!.id!, true);
   }, [tale]);
 

@@ -70,9 +70,10 @@ const WritingTab = ({ current }: Props) => {
 
         clone.state = 'report-created';
 
-        await insertTale(clone).then(() => {
+        await insertTale(clone).then(async () => {
           setTale(clone);
-          __saveTale(current, taleIndex, clone);
+          await __saveTale(current, taleIndex, clone);
+          __loadTales(current).then(setTales);
         });
       }
 
