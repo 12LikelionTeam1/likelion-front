@@ -33,19 +33,19 @@ const NanumText = ({
   }, [size]);
 
   return color == 'black' ? (
-    <a
+    <span
       className={`${style.text} text-black ${textSize} ${
         ellipsis ? 'truncate' : ''
       }`}>
       {children}
-    </a>
+    </span>
   ) : (
-    <a
+    <span
       className={`${style.text} text-red ${textSize} ${
         ellipsis ? 'truncate' : ''
       }`}>
       {children}
-    </a>
+    </span>
   );
 };
 
