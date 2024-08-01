@@ -15,6 +15,12 @@ export type UserInfoType = {
     email: string;
 };
 
+export type WritingType = {
+    id: string;
+    title: string;
+    visibility: 'PUBLIC' | 'PRIVATE';
+    written_at: string;
+};
 
 const MypageContainer = () => {
     const { account } = useAccount();
@@ -22,6 +28,7 @@ const MypageContainer = () => {
     const [mainKeywords, setMainKeywords] = useState<MainKeywordsType[]>([]);
     const [publishedWritings, setPublishedWritings] = useState<number>(0);
     const [userInfo, setUserInfo] = useState<UserInfoType | null>(null);
+    const [writings, setWritings] = useState<WritingType[]>([]);
 
     const fetchUserInfo = useCallback(async () => {
         if (account && account.access_token) {
@@ -80,7 +87,7 @@ const MypageContainer = () => {
             if (account && account.access_token) {
                 try {
                     const response = await axios.patch(
-                        `/api/me/writings/${id}/visibility`,
+                        `/me/writings/${id}/visibility`,
                         { visibility },
                         {
                             headers: {
@@ -99,14 +106,34 @@ const MypageContainer = () => {
             [account]
         );
 
+    const fetchWritings = useCallback(async () => {
+        if (account && account.access_token) {
+            try {
+                const response = await axios.get('/me/writings', {
+                    headers: {
+                    Authorization: `Bearer ${account.access_token}`,
+                },
+                params: {},
+                });
+                if (response.status === 200) {
+                    setWritings(response.data.writings);
+                }
+            } catch (error) {
+                console.error('글 목록 조회 실패', error);
+            }
+            }
+        }, [account]);
+
+
         useEffect(() => {
-            fetchUserInfo;
+            fetchUserInfo();
             fetchMainKeywords();
-            fetchPublishedWritings();}
-            , [fetchUserInfo,fetchMainKeywords, fetchPublishedWritings]);
+            fetchPublishedWritings();
+            fetchWritings();}
+            , [fetchUserInfo, fetchMainKeywords, fetchPublishedWritings, fetchWritings]);
 
 
-    return <Mypage mainKeywords={mainKeywords} publishedWritings={publishedWritings} userInfo={userInfo} updateWritingVisibility={updateWritingVisibility}/>;
+    return <Mypage mainKeywords={mainKeywords} publishedWritings={publishedWritings} userInfo={userInfo} updateWritingVisibility={updateWritingVisibility} writings={writings}/>;
 }
 
 export default MypageContainer;

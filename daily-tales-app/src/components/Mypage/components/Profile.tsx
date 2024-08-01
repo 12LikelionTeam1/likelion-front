@@ -2,12 +2,15 @@ import React from 'react';
 import styles from '../styles/mypage.module.css';
 import images from '@assets/images';
 import { UserInfoType } from '../containers/MypageContainer';
+import useAccount from '@hooks/useAccount';
 
 interface ProfileProps {
     userInfo: UserInfoType;
 }
 
 const Profile = ({ userInfo }: ProfileProps) => {
+    const { account } = useAccount();
+
     return (
     <>
     <div className={styles.profile}>
@@ -15,8 +18,8 @@ const Profile = ({ userInfo }: ProfileProps) => {
         <div className={styles.name}>
             <p>{userInfo.nickname} 작가님</p>
             <div className={styles.email}>
-            <p>{userInfo.display_id}</p>
-            <img src={images.googleLogo} alt='googlelogo' />
+                <p>{account.email}</p>
+                <img src={images.googleLogo} alt='googlelogo' />
             </div>
         </div>
     </div>

@@ -4,6 +4,7 @@ import DatePicker from '@components/common/DatePicker/DatePicker';
 import { useState } from 'react';
 import WritingTab from './components/WritingTab';
 import HomeTab from './components/HomeTab';
+import { Link } from 'react-router-dom';
 
 type Tabs = 'home' | 'write';
 
@@ -20,9 +21,9 @@ const Main = () => {
         </div>
         <div className='flex flex-row items-center'>
           <DatePicker onDatePicked={setCurrent} />
-          <button className={styles.mypage}>
+          <Link to = 'mypage' className={styles.mypage}>
             <img src={images.icons.user} alt='마이페이지' />
-          </button>
+          </Link>
         </div>
       </div>
       {tab == 'write' && <WritingTab current={current} />}

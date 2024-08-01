@@ -3,30 +3,24 @@ import styles from '../styles/mypage.module.css';
 import images from '@assets/images';
 import DatePicker from '@components/common/DatePicker/DatePicker';
 import NanumText from '@components/common/NanumText/NanumText';
-
-type Shared = 'shared' | 'noshared';
+import { WritingType } from '../containers/MypageContainer';
 
 interface WritingListProps {
     onDatePicked: (date: Date) => void;
     openModal: (content: string) => void;
     updateWritingVisibility: (id: string, visibility: 'PUBLIC' | 'PRIVATE') => void;
+    writings: WritingType[];
 }
 
 const ModalContent = <NanumText>#2 번째 글 고독한 예술가의 오후</NanumText>
 
-const WritingList = ({ onDatePicked, openModal, updateWritingVisibility }: WritingListProps) => {
-    const [current, setCurrent] = useState(new Date());
-    const [shared, setShared] = useState<Shared>('noshared');
+const WritingList = ({ onDatePicked, openModal, updateWritingVisibility, writings }: WritingListProps) => {
 
     const handleOpenModal = (id : string) => {
         openModal(ModalContent);
         updateWritingVisibility(id, 'PUBLIC');
 };
 
-    const writings = [
-        { id: 1, shared: shared === 'noshared' },
-        { id: 2, shared: shared === 'shared' },
-    ];
 
 return (
     <div className={styles.writingcontainer}>
@@ -34,18 +28,18 @@ return (
             <img src={images.icons.notebook} alt='notebook' />
             <p>작성한 감상문</p>
             <div className={styles.datepicker}>
-                <DatePicker onDatePicked={(date) => { setCurrent(date); onDatePicked(date); }} />
+                <DatePicker onDatePicked={(date) => onDatePicked(date)} />
             </div>
         </div>
         
         {writings.length > 0 ? (
-                writings.map((writing) =>(
+                writings.map((writing, index) =>(
                 <div key={writing.id} className={styles.writingcontent}>
-                    <p>#{writing.id} 번째 글 고독한 예술가의 오후</p>
-                    {writing.shared ? (
+                    <p>#{index + 1} 번째 글 {writing.title}</p>
+                    {writing.visibility === 'PUBLIC' ? (
                         <span>감상 공유중</span>
                     ) : (
-                        <button onClick={() => handleOpenModal(writing.id)}  className={styles.closeButton}>감상 공유하기</button>
+                        <button onClick={() => handleOpenModal(writing.id)} className={styles.closeButton}>감상 공유하기</button>
                     )}
                 </div>
                 ))

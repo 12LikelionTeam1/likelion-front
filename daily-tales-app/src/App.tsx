@@ -53,13 +53,11 @@ axios.interceptors.response.use(
 
 const App = () => {
   return (
-    <>
     <Provider store={store}>
       <BrowserRouter>
         <RootNavigationContainer />
       </BrowserRouter>
     </Provider>
-    </>
   );
 };
 
