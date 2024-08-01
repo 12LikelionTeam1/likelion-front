@@ -1,9 +1,13 @@
 import images from '@assets/images';
 import styles from './logo.module.css';
 
-const Logo = () => {
+type Props = {
+  pclass?: string;
+};
+
+const Logo = ({ pclass }: Props) => {
   return (
-    <div className={`${styles.root}`}>
+    <div className={`${styles.root} ${pclass ?? ''}`}>
       <div className={`${styles.verticalLineR} border-red`} />
       <div className={`${styles.verticalLineL} border-red`} />
       <div className={`${styles.wrapper}`}>
