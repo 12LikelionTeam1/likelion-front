@@ -1,11 +1,11 @@
-FROM node:14-alpine AS builder
+FROM node:21.6.2 AS builder
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install
 COPY . .
 RUN npm run build
 
-FROM node:14-alpine
+FROM node:21.6.2
 WORKDIR /app
 COPY --from=builder /app/dist ./dist
 RUN npm install -g serve
