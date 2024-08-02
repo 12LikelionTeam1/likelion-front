@@ -1,0 +1,240 @@
+.scroll {
+    overflow: auto;
+    margin:0;
+    padding: 0;
+    width: 100%;
+}
+
+.header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 50px;
+}
+
+.header img {
+    left: 0;
+    width: 24px;
+    height: 24px;
+    margin-left: 10px;
+}
+
+.header p {
+    margin: 0;
+    text-align: center;
+    width: 100%;
+    font-size: large;
+}
+
+
+.infocontainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.userinfo {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.liketab {
+    display: flex;
+    align-items: center;
+}
+
+.liketab a {
+    display: flex;
+    align-items: center;
+}
+
+.userinfo img,
+.liketab a img {
+    margin-right: 5px;
+}
+
+.liketab a img:last-child {
+    margin-right: 0;
+}
+
+.liketab a p {
+    margin: 0 5px;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px 40px;
+}
+
+.profile > img {
+    background-color: black;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.name {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    margin-left: 50px;
+}
+
+.email {
+    display: flex;
+    align-items: center; /* 수직 중앙 정렬 */
+    gap: 2px;
+    margin-top: 10px;
+}
+
+.email p {
+    margin-right: 0px;
+}
+
+.email img {
+    width: 24px; /* 이미지 크기 설정 */
+    height: 24px; /* 이미지 크기 설정 */
+    margin-left: 10px;
+}
+
+.profilebutton {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    gap: 10px;
+}
+
+.writingheader {
+    display: flex;
+    padding: 10px;
+}
+
+.writingheader > img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+
+.writingheader p {
+    margin: 0;
+}
+
+.datepicker {
+    margin-left: 451px;
+}
+
+.writingcontent {
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    padding: 8px 20px;
+}
+
+.writingcontent span,button {
+    margin: 0;
+    color: #fa9a9a;
+}
+
+.emptyContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    padding: 20px 0;
+    padding-bottom: 40px;
+}
+
+.emptyContent img {
+    width: 200px;
+    height: auto;
+    padding: 60px 0;
+}
+
+
+.badgeheader{
+    display: flex;
+    padding: 10px;
+}
+
+.badgeheader img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+
+.analysiscontainer {
+    margin-bottom: 16px;
+}
+
+.analysisheader {
+    display: flex;
+    padding: 10px;
+}
+
+.analysisheader img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+
+.read, .share, .keyword {
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+    margin: 5px;
+}
+
+.iconText {
+    display: inline-flex;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+}
+
+.iconText img {
+    margin-right: 10px;
+}
+
+.iconText p {
+    align-content: center;
+}
+
+.numread, .numshare {
+    display: flex;
+    justify-content: space-between;
+}
+
+.numread img, .numshare img {
+    margin-right: 4px;
+}
+
+.numread p, .numshare p {
+    margin: 0;
+    color: #fa9a9a;
+}
+
+.keywordcontent {
+    display: inline-flex;
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.keywordcontent p {
+    background-color: #fa9a9a;  
+    border-radius: 15px;
+    padding: 10px 20px;
+    text-align: center; 
+    margin: 5px;
+}
+
+

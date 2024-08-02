@@ -1,0 +1,61 @@
+.scroll {
+    overflow: auto;
+    margin:0;
+    padding: 0;
+    width: 100%;
+}
+
+.header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    height: 50px;
+}
+
+.header button {
+    left: 0;
+    width: 24px;
+    height: 24px;
+    margin-left: 10px;
+}
+
+.header p {
+    margin: 0;
+    text-align: center;
+    width: 100%;
+    font-size: large;
+}
+
+.likeWrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.writingItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 16px;
+}
+
+.profileImage {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    margin-right: 16px;
+}
+
+.writingDetails {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.nickname {
+    margin-bottom: 10px;
+}
+
+.date {
+    margin-bottom: 4px;
+}
