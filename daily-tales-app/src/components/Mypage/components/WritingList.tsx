@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from '../styles/mypage.module.css';
 import images from '@assets/images';
 import DatePicker from '@components/common/DatePicker/DatePicker';
@@ -7,16 +7,15 @@ import { WritingType } from '../containers/MypageContainer';
 
 interface WritingListProps {
     onDatePicked: (date: Date) => void;
-    openModal: (content: string) => void;
+    openModal: (content: React.ReactNode) => void;
     updateWritingVisibility: (id: string, visibility: 'PUBLIC' | 'PRIVATE') => void;
     writings: WritingType[];
 }
 
-const ModalContent = <NanumText>#2 번째 글 고독한 예술가의 오후</NanumText>
-
 const WritingList = ({ onDatePicked, openModal, updateWritingVisibility, writings }: WritingListProps) => {
 
-    const handleOpenModal = (id : string) => {
+    const handleOpenModal = (id : string, title: string, index: number) => {
+        const ModalContent = <NanumText>#{index} 번째 글 {title}</NanumText>;
         openModal(ModalContent);
         updateWritingVisibility(id, 'PUBLIC');
 };
@@ -39,7 +38,7 @@ return (
                     {writing.visibility === 'PUBLIC' ? (
                         <span>감상 공유중</span>
                     ) : (
-                        <button onClick={() => handleOpenModal(writing.id)} className={styles.closeButton}>감상 공유하기</button>
+                        <button onClick={() => handleOpenModal(writing.id, writing.title, index + 1)} className={styles.closeButton}>감상 공유하기</button>
                     )}
                 </div>
                 ))
@@ -47,7 +46,7 @@ return (
                 <div className={styles.emptyContent}>
                     <img src={images.logoa} alt='empty' />
                     <NanumText>{'감상문을 작성하고'}</NanumText>
-                    <NanumText>공유해보세요!</NanumText>
+                    <NanumText>{'공유해보세요!'}</NanumText>
                 </div>
             )}
     </div>
