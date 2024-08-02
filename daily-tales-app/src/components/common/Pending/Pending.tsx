@@ -1,17 +1,15 @@
 import Backdrop from '../Backdrop/Backdrop';
 import Logo from '../Logo/Logo';
 
-type Props = {
-  pendingVisible: boolean;
-};
-
-const Pending = ({ pendingVisible }: Props) => {
+const Pending = () => {
   return (
-    pendingVisible && (
+    <div id='pending'>
       <Backdrop hide={() => {}}>
-        <Logo />
+        <div className='w-full h-full flex justify-center items-center'>
+          <Logo />
+        </div>
       </Backdrop>
-    )
+    </div>
   );
 };
 

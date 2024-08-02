@@ -4,14 +4,23 @@ import { Provider } from 'react-redux';
 import store from '@store/store';
 import axios from 'axios';
 import { AccountStorage } from '@hooks/useAccount';
+import Pending from '@components/common/Pending/Pending';
 
 axios.defaults.baseURL = 'https://dailytales.kro.kr/api';
 
+axios.interceptors.request.use((req) => {
+  window.document.getElementById('pending')!.style.visibility = 'visible';
+  return req;
+});
+
 axios.interceptors.response.use(
   (res) => {
+    window.document.getElementById('pending')!.style.visibility = 'hidden';
     return res;
   },
   async (error) => {
+    window.document.getElementById('pending')!.style.visibility = 'hidden';
+
     if (
       error.response &&
       error.response.status == 401 &&
@@ -47,6 +56,10 @@ axios.interceptors.response.use(
       }
     }
 
+    if (error.response && error.response.status == 400) {
+      window.location.reload();
+    }
+
     return error;
   },
 );
@@ -54,6 +67,7 @@ axios.interceptors.response.use(
 const App = () => {
   return (
     <Provider store={store}>
+      <Pending />
       <BrowserRouter>
         <RootNavigationContainer />
       </BrowserRouter>
