@@ -15,7 +15,7 @@ const images = {
     homeFill: IMAGE_ROOT + '/icons/ic-home-fill.png',
     writeFill: IMAGE_ROOT + '/icons/ic-write-fill.png',
     note: IMAGE_ROOT + '/icons/ic-note.png',
-    badge: IMAGE_ROOT + '/icons/ic-badge.png',
+    badge: IMAGE_ROOT + '/icons/ic-badge.svg',
     analysis: IMAGE_ROOT + '/icons/ic-analysis.png',
     book: IMAGE_ROOT + '/icons/ic-book.png',
     key: IMAGE_ROOT + '/icons/ic-key.png',

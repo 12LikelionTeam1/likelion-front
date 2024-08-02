@@ -18,20 +18,10 @@ const Analysis = ({ mainKeywords, publishedWritings }: AnalysisProps) => {
         <div className={styles.read}>
             <div className={styles.iconText}>
                 <img src={images.icons.book} alt="book" />
-                <p>읽은 글</p>
+                <p>감상문 수</p>
             </div>
             <div className={styles.numread}>
                 <img src={images.icons.books} alt="books" />
-                <p>87편</p> {/* 수정하기 */}
-            </div>
-        </div>
-        <div className={styles.share}>
-            <div className={styles.iconText}>
-                <img src={images.icons.edit} alt="edit" />
-                <p>공유한 글</p>
-            </div>
-            <div className={styles.numshare}>
-                <img src={images.icons.pens} alt="pens" />
                 <p>{publishedWritings}편</p>
             </div>
         </div>

@@ -29,6 +29,8 @@ const MypageContainer = () => {
     const [publishedWritings, setPublishedWritings] = useState<number>(0);
     const [userInfo, setUserInfo] = useState<UserInfoType | null>(null);
     const [writings, setWritings] = useState<WritingType[]>([]);
+    const [startDate, setStartDate] = useState<string | null>(null);
+    const [endDate, setEndDate] = useState<string | null>(null);
 
     const fetchUserInfo = useCallback(async () => {
         if (account && account.access_token) {
@@ -106,14 +108,17 @@ const MypageContainer = () => {
             [account]
         );
 
-    const fetchWritings = useCallback(async () => {
+    const fetchWritings = useCallback(async (startDate: string, endDate: string) => {
         if (account && account.access_token) {
             try {
                 const response = await axios.get('/me/writings', {
                     headers: {
                     Authorization: `Bearer ${account.access_token}`,
                 },
-                params: {},
+                params: {
+                    'start-date': startDate,
+                    'end-date': endDate,
+                },
                 });
                 if (response.status === 200) {
                     setWritings(response.data.writings);
@@ -129,11 +134,22 @@ const MypageContainer = () => {
             fetchUserInfo();
             fetchMainKeywords();
             fetchPublishedWritings();
-            fetchWritings();}
-            , [fetchUserInfo, fetchMainKeywords, fetchPublishedWritings, fetchWritings]);
+        }, [fetchUserInfo, fetchMainKeywords, fetchPublishedWritings, fetchWritings]);
 
 
-    return <Mypage mainKeywords={mainKeywords} publishedWritings={publishedWritings} userInfo={userInfo} updateWritingVisibility={updateWritingVisibility} writings={writings}/>;
+        useEffect(() => {
+            if (startDate && endDate) {
+                fetchWritings(startDate, endDate);
+            }
+        }, [startDate, endDate, fetchWritings]);
+
+
+    return <Mypage mainKeywords={mainKeywords} 
+    publishedWritings={publishedWritings} 
+    userInfo={userInfo} 
+    updateWritingVisibility={updateWritingVisibility} writings={writings} 
+    setStartDate={setStartDate} 
+    setEndDate={setEndDate} />;
 }
 
 export default MypageContainer; 

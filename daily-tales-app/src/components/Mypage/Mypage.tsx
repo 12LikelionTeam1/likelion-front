@@ -17,13 +17,17 @@ interface MypageProps {
     userInfo : UserInfoType | null;
     updateWritingVisibility: (id: string, visibility: 'PUBLIC' | 'PRIVATE') => void;
     writings: WritingType[];
+    setStartDate: (date: string) => void;
+    setEndDate: (date: string) => void;
 }
 
-const Mypage = ({ mainKeywords, publishedWritings, userInfo, updateWritingVisibility, writings }: MypageProps) => {
+const Mypage = ({ mainKeywords, publishedWritings, userInfo, updateWritingVisibility, writings, setStartDate, setEndDate }: MypageProps) => {
     const { openModal } = useModal();
 
     const handleDatePicked = (date: Date) => {
-    console.log('Date picked:', date);
+        const formattedDate = date.toISOString().split('T')[0];
+        setStartDate(formattedDate);
+        setEndDate(formattedDate);
 };
 
 return (
