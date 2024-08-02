@@ -1,19 +1,18 @@
-import React from 'react';
 import styles from '../styles/like.module.css';
 import images from '@assets/images';
 import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    return (
+  return (
     <div className={styles.header}>
-        <button onClick={() => navigate(-1)}>
-            <img src={images.icons.backarrow} alt='이전페이지' />
-        </button>
-        <p>나의 문집</p>
+      <button onClick={() => navigate(-1)}>
+        <img src={images.icons.backarrow} alt='이전페이지' />
+      </button>
+      <p>나의 문집</p>
     </div>
-    );
+  );
 };
 
 export default Header;
