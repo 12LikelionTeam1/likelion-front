@@ -61,7 +61,10 @@ const LandingContainer = () => {
   );
 
   return (
-    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+    <GoogleOAuthProvider
+      clientId={
+        '663501545611-ojuvda2s0hr61p70t1dmalkkmoivmoqg.apps.googleusercontent.com'
+      }>
       <Landing onGoogleLoginSuccessed={onGoogleLoginSuccessed} />
     </GoogleOAuthProvider>
   );
