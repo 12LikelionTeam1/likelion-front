@@ -1,2 +1,8 @@
-# likelion-front
-12기 멋쟁이 사자처럼 해커톤 프론트엔드 레포
+![표지](https://github.com/user-attachments/assets/b92f683f-176d-4fc2-bfb8-54a81a7f6f87)
+![p-1](https://github.com/user-attachments/assets/bed19d1e-09f9-44cd-8191-967741ff06b3)
+![p-2](https://github.com/user-attachments/assets/efba3c89-fe7b-4d96-9faf-878bf08c3f4e)
+![p-3](https://github.com/user-attachments/assets/193a56d4-77cd-47c3-a0c5-52df8f66426a)
+![p-4](https://github.com/user-attachments/assets/1d7bf54e-32bb-42d0-845d-d12ac7d52aba)
+![p-5](https://github.com/user-attachments/assets/befaa755-45c3-4031-9053-1217b1f3105c)
+![p-6](https://github.com/user-attachments/assets/879855b7-8898-40a1-8813-e98a95907509)
+![p-7](https://github.com/user-attachments/assets/f108955b-891f-469e-8c48-0d2110667f90)
